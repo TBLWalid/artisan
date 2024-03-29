@@ -1,0 +1,23 @@
+name: artisans_app
+description: A beautiful Flutter app for displaying artisans services and login functionality.
+version: 1.0.0
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  # إضافة الصور هنا
+  assets:
+    - images/
+  
