@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'post_Page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -89,12 +90,6 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // افتح صفحة إضافة منشور جديد
-        },
-        child: Icon(Icons.add),
       ),
     );
   }

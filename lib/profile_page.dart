@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'my_requests_page.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -32,6 +33,16 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.phone),
               title: Text('+213560629569'),
+            ),
+            ListTile(
+              leading: Icon(Icons.language),
+              title: Text('My Requests'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyRequestsPage()),
+                );
+              },
             ),
           ],
         ),
