@@ -72,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.my_library_books),
-            label: 'My Orders',
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.login),

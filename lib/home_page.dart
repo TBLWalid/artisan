@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'post_Page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -8,7 +7,6 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // إضافة بحث هنا
           Padding(
             padding:
                 const EdgeInsets.all(12.0), // تغيير الحواف الأفقية (horizontal)
@@ -22,12 +20,11 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: GridView.builder(
-                itemCount: 20,
+                itemCount: 15,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio:
@@ -54,8 +51,7 @@ class HomePage extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/profile_picture.jpg'),
+                                  image: AssetImage('assets/picture.jpg'),
                                   fit: BoxFit.cover,
                                 ),
                                 borderRadius: BorderRadius.vertical(
@@ -70,13 +66,10 @@ class HomePage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'اسم الحرفي',
+                                  'نوع الحرفة',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                                Text(
-                                  'نوع الحرفة',
                                 ),
                               ],
                             ),

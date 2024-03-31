@@ -1,15 +1,11 @@
+import 'package:artisans_app/create_poste.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'TwitterLike_Page.dart'; // استيراد صفحة المنشور
 
 class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Posts'),
-        backgroundColor: Color.fromARGB(255, 236, 237, 219),
-      ),
       body: ListView.builder(
         itemCount: posts.length, // عدد المنشورات
         itemBuilder: (context, index) {
@@ -85,7 +81,7 @@ class PostPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TwitterLikePage()),
+            MaterialPageRoute(builder: (context) => CreatepostPage()),
           );
         },
         child: Icon(Icons.add),
