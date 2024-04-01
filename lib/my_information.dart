@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
 
+String email = 'tebbalwali8@gmail.com';
+String ntel = '+213560629569';
+
 class MyInformation extends StatefulWidget {
   final ValueChanged<String> onNameChanged;
   final ValueChanged<String> onRoleChanged;
@@ -21,6 +24,7 @@ class _MyInformationState extends State<MyInformation> {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Information'),
+        backgroundColor: Color.fromARGB(255, 236, 237, 219),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -53,7 +57,7 @@ class _MyInformationState extends State<MyInformation> {
           ),
           ListTile(
             leading: Icon(Icons.group),
-            title: Text('Role'),
+            title: Text('type'),
             subtitle: Text(role),
             trailing: IconButton(
               icon: Icon(Icons.edit),
@@ -66,6 +70,46 @@ class _MyInformationState extends State<MyInformation> {
                   setState(() {
                     role = newRole;
                     widget.onRoleChanged(newRole);
+                  });
+                }
+              },
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('email'),
+            subtitle: Text(email),
+            trailing: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () async {
+                final newemail = await showDialog<String>(
+                  context: context,
+                  builder: (context) => _NameEditDialog(initialValue: email),
+                );
+                if (newemail != null) {
+                  setState(() {
+                    email = newemail;
+                    widget.onNameChanged(newemail);
+                  });
+                }
+              },
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Numero tel'),
+            subtitle: Text(ntel),
+            trailing: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () async {
+                final newntel = await showDialog<String>(
+                  context: context,
+                  builder: (context) => _NameEditDialog(initialValue: ntel),
+                );
+                if (newntel != null) {
+                  setState(() {
+                    name = newntel;
+                    widget.onNameChanged(newntel);
                   });
                 }
               },

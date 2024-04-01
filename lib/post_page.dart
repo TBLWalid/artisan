@@ -1,6 +1,6 @@
 import 'package:artisans_app/create_poste.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'listes/liste_poste.dart';
 
 class PostPage extends StatelessWidget {
   @override
@@ -53,23 +53,6 @@ class PostPage extends StatelessWidget {
                       'تعليقات:',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Divider(),
-                    RatingBar.builder(
-                      initialRating: 3, // التقييم الافتراضي
-                      minRating: 1,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemSize: 30,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        // يمكنك التعامل مع التقييم المحدث هنا
-                      },
-                    ),
                   ],
                 ),
               ),
@@ -91,32 +74,4 @@ class PostPage extends StatelessWidget {
 }
 
 // قم بتعريف بيانات المنشور في مكان ما، هنا سنستخدم قائمة مؤقتة للأغراض التوضيحية
-List<Post> posts = [
-  Post(
-    title: 'عنوان المنشور 1',
-    body: 'محتوى المنشور 1',
-    images: [
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-    ],
-  ),
-  Post(
-    title: 'عنوان المنشور 2',
-    body: 'محتوى المنشور 2',
-    images: [
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-      'https://via.placeholder.com/150',
-    ],
-  ),
-  // يمكنك إضافة المزيد من المنشورات هنا
-];
 
-// تعريف نموذج بيانات المنشور
-class Post {
-  final String title;
-  final String body;
-  final List<String> images;
-
-  Post({required this.title, required this.body, required this.images});
-}

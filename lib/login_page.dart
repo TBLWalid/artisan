@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'signup_page.dart';
-import 'main.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -20,15 +19,6 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
         ),
         backgroundColor: Color.fromARGB(255, 236, 237, 219),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => ArtisansApp()),
-            );
-          },
-        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -36,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 236, 236, 165),
+              Colors.white,
+              Color.fromARGB(255, 236, 237, 219),
             ],
           ),
         ),
@@ -52,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 155.0,
                     child: Image.asset(
-                      "images/logo.jpg",
+                      "images/logo.png",
                       fit: BoxFit.contain,
                     ),
                   ),
