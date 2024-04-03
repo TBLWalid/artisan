@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
+import 'listes/liste_categories.dart';
 
 class HomePage extends StatelessWidget {
-  final List<String> categories = [
-    'اعمال الكهرباء',
-    'اعمال النجارة',
-    'نقل البضائع',
-    'اعمال الحدادة',
-    'خدمات السيارات',
-    'الدهانات و ديكورات',
-    'اعمال السباكة',
-    'تنظيفات و خدم',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +56,12 @@ class HomePage extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('assets/picture.jpg'),
+                                  image: AssetImage('images/$index.jpg'),
                                   fit: BoxFit.cover,
                                 ),
                                 borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(10.0)),
+                                  top: Radius.circular(10.0),
+                                ),
                               ),
                             ),
                           ),
@@ -111,6 +102,7 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 236, 237, 219),
         title: Text(category),
       ),
       body: Center(

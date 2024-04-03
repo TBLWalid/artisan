@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     autofocus: false,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.3),
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passwordController,
                     autofocus: false,
                     obscureText: true,
-                    style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                    style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white.withOpacity(0.3),
