@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class CreatepostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('create poste'),
-        backgroundColor: Color.fromARGB(255, 236, 237, 219),
+        title: Text(
+          'create post',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.brown[800],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),

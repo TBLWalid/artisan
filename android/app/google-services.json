@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "42292431777",
+    "project_id": "artisan-f5da6",
+    "storage_bucket": "artisan-f5da6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42292431777:android:deef5f3435b3a0379e59e0",
+        "android_client_info": {
+          "package_name": "com.example.projectmemoire"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-JWiqpF4zjDF5uOgHSKPXLAztrZOMegw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

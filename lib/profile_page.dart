@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+import 'package:artisans_app/func.dart';
 import 'package:artisans_app/my_information.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'listes/liste_poste.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'my_requests_page.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 String name = 'Walid TBL';
 String role = 'Client';
@@ -13,9 +17,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Uint8List? _image;
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+
+    setState(() {
+      _image = img;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.brown[800],
+        title: Text(
+          'My Profile',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,10 +46,23 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(
                   height: 150.0,
                 ),
-                CircleAvatar(
-                  radius: 60,
-                  backgroundImage: AssetImage('images/walid.jpg'),
-                ),
+                Stack(children: [
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 60,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : CircleAvatar(
+                          radius: 60,
+                          backgroundImage: AssetImage('images/walid.jpg'),
+                        ),
+                  Positioned(
+                    child: IconButton(
+                        onPressed: selectImage, icon: Icon(Icons.add_a_photo)),
+                    bottom: -10,
+                    left: 80,
+                  ),
+                ]),
                 SizedBox(
                   width: 20.0,
                 ),

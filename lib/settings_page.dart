@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SettingsPage extends StatelessWidget {
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        backgroundColor: Colors.brown[800],
+        title: Text(
+          'Settings',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: ListView(
         padding: EdgeInsets.all(16),
@@ -38,6 +44,8 @@ class SettingsPage extends StatelessWidget {
             leading: Icon(Icons.logout),
             title: Text('Logout'),
             onTap: () {
+              _auth.signOut();
+              Navigator.pop(context);
               // أضف أكواد لتسجيل الخروج من التطبيق هنا
             },
           ),

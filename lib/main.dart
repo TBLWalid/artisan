@@ -1,11 +1,18 @@
+import 'package:artisans_app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'settings_page.dart';
 import 'profile_page.dart';
 import 'post_page.dart';
 import 'login_page.dart'; // استيراد صفحة LoginPage
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(ArtisansApp());
 }
 
@@ -57,7 +64,7 @@ class _WelcomePageState extends State<WelcomePage> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 236, 237, 219),
+                    color: Colors.brown[600],
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(88),
                         bottomLeft: Radius.circular(88)),
@@ -75,20 +82,17 @@ class _WelcomePageState extends State<WelcomePage> {
                           children: [
                             Text("تطبيق الحرفيين",
                                 style: TextStyle(
-                                    color: Color(0xFF1e1c2a), fontSize: 20)),
+                                    color: Colors.white, fontSize: 20)),
                             SizedBox(height: 5),
                             Text("يتيح التواصل المباشر لطلب الخدمات بسهولة",
                                 style: TextStyle(
-                                    color: Color(0xFF1e1c2a).withOpacity(0.8),
-                                    fontSize: 20)),
+                                    color: Colors.white, fontSize: 20)),
                             Text("يتيح للمستخدمين تقييم ومراجعة الحرفيين",
                                 style: TextStyle(
-                                    color: Color(0xFF1e1c2a).withOpacity(0.8),
-                                    fontSize: 20)),
+                                    color: Colors.white, fontSize: 20)),
                             Text("لمساعدة الآخرين في الاختيار",
                                 style: TextStyle(
-                                    color: Color(0xFF1e1c2a).withOpacity(0.8),
-                                    fontSize: 20)),
+                                    color: Colors.white, fontSize: 20)),
                             SizedBox(height: 10),
                           ],
                         ),
@@ -200,26 +204,44 @@ class _MyHomePageState extends State<MyHomePage> {
     ProfilePage(),
     SettingsPage(), // إضافة صفحة LoginPage
   ];
+  final _auth = FirebaseAuth.instance;
+  late User signedInUser;
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        signedInUser = user;
+        print(signedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 236, 236, 165),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_none),
-            onPressed: () {
-              // افتح صفحة البحث
-            },
-          ),
-        ],
-        title: Text(
-          'Artisans',
-          style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
-        ),
-        backgroundColor: Color.fromARGB(255, 236, 237, 219),
-      ),
+      // appBar: AppBar(
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Icons.notifications_none),
+      //       onPressed: () {
+      //         // افتح صفحة البحث
+      //       },
+      //     ),
+      //   ],
+      //   title: Text(
+      //     'Artisanss',
+      //     style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
+      //   ),
+      //   backgroundColor: Color.fromARGB(255, 236, 237, 219),
+      // ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

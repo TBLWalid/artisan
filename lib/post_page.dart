@@ -2,6 +2,7 @@ import 'package:artisans_app/create_poste.dart';
 import 'package:flutter/material.dart';
 import 'listes/liste_poste.dart';
 
+
 class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
