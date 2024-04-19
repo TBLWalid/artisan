@@ -6,9 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'listes/liste_poste.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'my_requests_page.dart';
+import 'signup_page.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-String name = 'Walid TBL';
 String role = 'Client';
 
 class ProfilePage extends StatefulWidget {
@@ -34,6 +34,13 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text(
           'My Profile',
           style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: Column(

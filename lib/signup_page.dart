@@ -8,6 +8,8 @@ import 'home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+String name = '';
+
 class SignupPage extends StatefulWidget {
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -187,17 +189,16 @@ class _SignupPageState extends State<SignupPage> {
                             password: password,
                           );
                           Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyHomePage()),
-                              );
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage()),
+                          );
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             print('The password provided is too weak.');
                           } else if (e.code == 'email-already-in-use') {
                             print('The account already exists for that email.');
                           }
-                          
                         } catch (e) {
                           print(e);
                         }

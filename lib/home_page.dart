@@ -1,9 +1,11 @@
+import 'package:artisans_app/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'signup_page.dart';
 import 'listes/liste_categories.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Hi, Ayoub!',
+                      'Hi, $name',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,

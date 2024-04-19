@@ -27,6 +27,13 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.brown[800],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: ModalProgressHUD(
         inAsyncCall: spinner,

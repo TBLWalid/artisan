@@ -200,7 +200,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _pages = [
     HomePage(),
     PostPage(),
-    LoginPage(),
+
     ProfilePage(),
     SettingsPage(), // إضافة صفحة LoginPage
   ];
@@ -260,10 +260,6 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.my_library_books),
             label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.login),
-            label: 'Login',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),

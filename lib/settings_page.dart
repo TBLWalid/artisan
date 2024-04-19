@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'language_switch_page.dart';
 
 class SettingsPage extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
@@ -11,6 +12,13 @@ class SettingsPage extends StatelessWidget {
         title: Text(
           'Settings',
           style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: ListView(
@@ -28,7 +36,10 @@ class SettingsPage extends StatelessWidget {
             leading: Icon(Icons.language),
             title: Text('Language'),
             onTap: () {
-              // أضف أكواد لتغيير لغة التطبيق هنا
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyApp()),
+              );
             },
           ),
           Divider(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'profile_page.dart';
+import 'signup_page.dart';
 
 String email = 'tebbalwali8@gmail.com';
 String ntel = '+213560629569';
@@ -23,10 +24,14 @@ class _MyInformationState extends State<MyInformation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Information'),
-        backgroundColor: Color.fromARGB(255, 236, 237, 219),
+        title: Text(
+          'My Information',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.brown[800],
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
+          color: Colors.white,
           onPressed: () {
             Navigator.pop(context);
           },
@@ -84,7 +89,7 @@ class _MyInformationState extends State<MyInformation> {
               onPressed: () async {
                 final newemail = await showDialog<String>(
                   context: context,
-                  builder: (context) => _NameEditDialog(initialValue: email),
+                  builder: (context) => _EmailEditDialog(initialValue: email),
                 );
                 if (newemail != null) {
                   setState(() {
@@ -104,11 +109,11 @@ class _MyInformationState extends State<MyInformation> {
               onPressed: () async {
                 final newntel = await showDialog<String>(
                   context: context,
-                  builder: (context) => _NameEditDialog(initialValue: ntel),
+                  builder: (context) => _PhoneEditDialog(initialValue: ntel),
                 );
                 if (newntel != null) {
                   setState(() {
-                    name = newntel;
+                    ntel = newntel;
                     widget.onNameChanged(newntel);
                   });
                 }
@@ -213,6 +218,99 @@ class _RoleEditDialogState extends State<_RoleEditDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context, _selectedRole); // Return the new value
+          },
+          child: Text('Save'),
+        ),
+      ],
+    );
+  }
+}
+
+class _PhoneEditDialog extends StatefulWidget {
+  final String initialValue;
+
+  const _PhoneEditDialog({Key? key, required this.initialValue})
+      : super(key: key);
+
+  @override
+  _PhoneEditDialogState createState() => _PhoneEditDialogState();
+}
+
+class _PhoneEditDialogState extends State<_PhoneEditDialog> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Edit Phone Number'),
+      content: TextField(
+        controller: _controller,
+        decoration: InputDecoration(labelText: 'Phone Number'),
+        keyboardType: TextInputType.phone, // تحديد نوع لوحة المفاتيح للأرقام
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context); // إغلاق الحوار دون حفظ التغييرات
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context, _controller.text); // إرجاع القيمة الجديدة
+          },
+          child: Text('Save'),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmailEditDialog extends StatefulWidget {
+  final String initialValue;
+
+  const _EmailEditDialog({Key? key, required this.initialValue})
+      : super(key: key);
+
+  @override
+  _EmailEditDialogState createState() => _EmailEditDialogState();
+}
+
+class _EmailEditDialogState extends State<_EmailEditDialog> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Edit Email'),
+      content: TextField(
+        controller: _controller,
+        decoration: InputDecoration(labelText: 'Email Address'),
+        keyboardType: TextInputType
+            .emailAddress, // تحديد نوع لوحة المفاتيح للبريد الإلكتروني
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context); // إغلاق الحوار دون حفظ التغييرات
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context, _controller.text); // إرجاع القيمة الجديدة
           },
           child: Text('Save'),
         ),
