@@ -33,157 +33,113 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Stack(
+    return Material(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Stack(
+          children: [
+            Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 1.6,
                     decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.only(bottomRight: Radius.circular(88)),
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage("images/logo.png"),
-                            fit: BoxFit.cover)),
-                  ),
-                ),
+                      color: Colors.brown[800],
+                      borderRadius:
+                          BorderRadius.only(bottomRight: Radius.circular(70)),
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        'images/logoo.png',
+                        scale: 0.8,
+                        width: 320,
+                      ),
+                    ))
               ],
             ),
-          ),
-          SizedBox(
-            height: 25.0,
-          ),
-          Container(
-            height: 200,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.brown[600],
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(88),
-                        bottomLeft: Radius.circular(88)),
-                  ),
-                  child: PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (_, index) {
-                      return Container(
-                        padding: const EdgeInsets.only(top: 25),
-                        width: 100,
-                        height: 80,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text("تطبيق الحرفيين",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20)),
-                            SizedBox(height: 5),
-                            Text("يتيح التواصل المباشر لطلب الخدمات بسهولة",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20)),
-                            Text("يتيح للمستخدمين تقييم ومراجعة الحرفيين",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20)),
-                            Text("لمساعدة الآخرين في الاختيار",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20)),
-                            SizedBox(height: 10),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 2.66,
+                decoration: BoxDecoration(
+                  color: Colors.brown[800],
                 ),
-              ],
+              ),
             ),
-          ),
-          Container(
-            height: 80,
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 2.66,
+                padding: EdgeInsets.only(top: 40, bottom: 30),
+                decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius:
-                        BorderRadius.only(topRight: Radius.circular(88)),
-                  ),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                // عند الضغط على الزر، يتم نقل المستخدم إلى واجهة دعسوق
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                );
-                              },
-                              child: Text("تسجيل الدخول",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Color(0xFF1e1c2a).withOpacity(0.8),
-                                  )),
-                            ),
-                          ]),
+                        BorderRadius.only(topLeft: Radius.circular(70))),
+                child: Column(
+                  children: [
+                    Text(
+                      'CraftMatch',
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1,
+                          wordSpacing: 2,
+                          color: Colors.black),
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 40.0,
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              // عند الضغط على الزر، يتم نقل المستخدم إلى واجهة دعسوق
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyHomePage()),
-                              );
-                            },
-                            child: Row(
-                              children: [
-                                Text(
-                                  "مواصلة",
-                                  style: TextStyle(
-                                    color: Color(0xFF1e1c2a).withOpacity(0.8),
-                                    fontSize: 20.0,
-                                  ),
-                                ),
-                                SizedBox(
-                                    width: 8), // المسافة بين النص والأيقونة
-                                Icon(Icons.arrow_forward, // أيقونة السهم للأمام
-                                    color: Color.fromARGB(255, 0, 0, 0)),
-                              ],
-                            ),
-                          ),
-                        ],
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Text(
+                        'CraftMatch: Hire local craftspeople. Simple & secure....',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 20,
+                            letterSpacing: 1,
+                            wordSpacing: 3,
+                            color: Colors.black),
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Material(
+                      color: Color.fromARGB(251, 100, 152, 156),
+                      borderRadius: BorderRadius.circular(10),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage()),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 80),
+                          child: Text(
+                            'Get Started',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -200,7 +156,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _pages = [
     HomePage(),
     PostPage(),
-
     ProfilePage(),
     SettingsPage(), // إضافة صفحة LoginPage
   ];

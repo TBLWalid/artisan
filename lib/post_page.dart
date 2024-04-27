@@ -2,7 +2,6 @@ import 'package:artisans_app/create_poste.dart';
 import 'package:flutter/material.dart';
 import 'listes/liste_poste.dart';
 
-
 class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -19,20 +18,10 @@ class PostPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      posts[index].title,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
                     SizedBox(height: 8),
                     Text(
                       posts[index].body,
                       style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'الصور:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 8),
                     Row(

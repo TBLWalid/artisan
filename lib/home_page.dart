@@ -106,10 +106,10 @@ class _HomePageState extends State<HomePage> {
                             itemCount: categories.length,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 16.0,
-                              mainAxisSpacing: 16.0,
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.9,
+                              crossAxisSpacing: 25.0,
+                              mainAxisSpacing: 25.0,
                             ),
                             itemBuilder: (context, index) {
                               return InkWell(
@@ -124,9 +124,15 @@ class _HomePageState extends State<HomePage> {
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    border: Border.all(color: Colors.grey),
-                                  ),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      border: Border.all(color: Colors.grey),
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.black26,
+                                            spreadRadius: 1,
+                                            blurRadius: 6)
+                                      ]),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -160,6 +166,7 @@ class _HomePageState extends State<HomePage> {
                                               categories[index],
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
+                                                fontSize: 17,
                                               ),
                                             ),
                                           ],

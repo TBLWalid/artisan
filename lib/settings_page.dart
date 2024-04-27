@@ -1,9 +1,14 @@
+import 'package:artisans_app/login_page.dart';
+import 'package:artisans_app/signup_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'language_switch_page.dart';
+import 'btn.dart';
 
 class SettingsPage extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +54,29 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               // أضف أكواد لتفعيل أو تعطيل وضع الظلام هنا
             },
+            trailing: buttonOnOff(),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Signup'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SignupPage()),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.login),
+            title: Text('Login'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
           ),
           Divider(),
           ListTile(
@@ -60,7 +88,6 @@ class SettingsPage extends StatelessWidget {
               // أضف أكواد لتسجيل الخروج من التطبيق هنا
             },
           ),
-          Divider(),
         ],
       ),
     );

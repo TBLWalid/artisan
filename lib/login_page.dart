@@ -47,13 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      height: 155.0,
-                      child: Image.asset(
-                        "images/logo.png",
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    Image.asset('images/login.png'),
                     SizedBox(height: 45.0),
                     TextFormField(
                       onChanged: (value) {
@@ -68,13 +62,12 @@ class _LoginPageState extends State<LoginPage> {
                         fillColor: Colors.grey.withOpacity(0.1),
                         hintText: 'Email',
                         hintStyle: TextStyle(
-                          color: Colors.grey[600],
+                          color: Colors.grey[800],
                         ),
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 15.0),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
@@ -92,13 +85,12 @@ class _LoginPageState extends State<LoginPage> {
                         fillColor: Colors.grey.withOpacity(0.1),
                         hintText: 'Password',
                         hintStyle: TextStyle(
-                          color: Colors.grey[600],
+                          color: Colors.grey[800],
                         ),
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 15.0),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
@@ -110,17 +102,20 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Forgot Password?',
                         style: TextStyle(
-                            color: Colors.brown[600],
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
+                          color: Colors.brown[600],
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         // لون الخلفية
                         // لون النص عند التفاعل
+                        backgroundColor: Colors.brown[600],
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         padding: EdgeInsets.symmetric(
                             vertical: 15.0, horizontal: 50.0),
@@ -161,11 +156,30 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           }
                         },
-                        child: Text(
-                          'Log In',
-                          style: TextStyle(
-                              color: Colors.brown[600], fontSize: 18.0),
-                        ),
+                        child: Stack(alignment: Alignment.center, children: [
+                          Text(
+                            'Log in',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color.fromARGB(255, 70, 49, 41)),
+                                child: const Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ]),
                       ),
                     ),
                     SizedBox(
@@ -195,6 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.brown[600],
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         )
