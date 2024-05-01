@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:artisans_app/signup_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class infoprofile extends StatefulWidget {
   const infoprofile({Key? key}) : super(key: key);
@@ -10,7 +12,6 @@ class infoprofile extends StatefulWidget {
 }
 
 class _infoprofileState extends State<infoprofile> {
-  
   // List<QueryDocumentSnapshot> data=[];
   // getData()async{
   //   QuerySnapshot querySnapshot =
@@ -19,9 +20,10 @@ class _infoprofileState extends State<infoprofile> {
   //   .get();
   //   data.addAll(querySnapshot.docs);
   //   setState(() {
-      
+
   //   });
   // }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,10 +33,8 @@ class _infoprofileState extends State<infoprofile> {
         children: [
           ListTile(
             leading: Icon(Icons.email_outlined),
-            title: Text('ayoubbelme2003@gmail.com'),
-            onTap: () {
-              
-            },
+            title: Text('UserName@gmail.com'),
+            onTap: () {},
           ),
           Divider(),
           ListTile(

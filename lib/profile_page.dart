@@ -1,6 +1,8 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 import 'package:artisans_app/func.dart';
 import 'package:artisans_app/info_profile.dart';
+import 'package:artisans_app/language_switch_page.dart';
 import 'package:artisans_app/my_information.dart';
 import 'package:artisans_app/pic_profile.dart';
 import 'package:artisans_app/review_profile.dart';
@@ -9,12 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'listes/liste_poste.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'my_requests_page.dart';
 import 'signup_page.dart';
-import 'package:artisans_app/btn.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+// import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
 
 String role = 'Client';
 
@@ -32,8 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
       _image = img;
     });
   }
-  
-  
 
   @override
   // void initState(){
@@ -107,6 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         children: [
                           Container(
+                            
                               decoration: BoxDecoration(
                                   color: Color.fromARGB(248, 41, 120, 128),
                                   borderRadius: BorderRadius.circular(12),

@@ -1,8 +1,10 @@
 import 'package:artisans_app/func.dart';
 import 'package:artisans_app/home_page.dart';
+import 'package:artisans_app/language_switch_page.dart';
 import 'package:artisans_app/main.dart';
 import 'package:artisans_app/verified_email.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -33,22 +35,28 @@ class _SignupPageState extends State<SignupPage> {
   late String password;
   late String state;
   bool spinner = false;
-
+  final _firestore=FirebaseFirestore.instance;
+// void getinfo()async{
+//   final infos = await _firestore.collection('users').get();
+//   for (var info in infos.docs){
+// print(info.data());
+//   }
+// }
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future<void> addUser() {
-    // Call the user's CollectionReference to add a new user
-    return users
-        .add({
-          'full_name': _firstnameController.text, // John Doe
-          'full_name': _lastnameController.text, // John Doe
-          'email': _emailController.text, // Stokes and Sons
-          'phoneNo': _phoneController.text,
-          'state': _stateController.text, // 42
-        })
-        .then((value) => print("User Added"))
-        .catchError((error) => print("Failed to add user: $error"));
-  }
+  // Future<void> addUser() {
+  //   // Call the user's CollectionReference to add a new user
+  //   return users
+  //       .add({
+  //         'first_name': _firstnameController.text, 
+  //         'last_name': _lastnameController.text, 
+  //         'email': _emailController.text, 
+  //         'phoneNo': _phoneController.text,
+  //         'state': _stateController.text, 
+  //       })
+  //       .then((value) => print("User Added"))
+  //       .catchError((error) => print("Failed to add user: $error"));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -248,7 +256,14 @@ class _SignupPageState extends State<SignupPage> {
                             MaterialPageRoute(
                                 builder: (context) => MyHomePage()),
                           );
-                          addUser();
+                          // addUser();
+                          _firestore.collection('users').add({
+                            'first_name': _firstnameController.text, 
+                            'last_name': _lastnameController.text, 
+                            'email': _emailController.text, 
+                            'phoneNo': _phoneController.text,
+                            'state': _stateController.text, 
+                          });
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             print('The password provided is too weak.');
@@ -259,7 +274,9 @@ class _SignupPageState extends State<SignupPage> {
                           print(e);
                         }
                         ;
+                        
                       },
+                      
                       child: Stack(alignment: Alignment.center, children: [
                         Text(
                           'Sign Up',
@@ -284,15 +301,7 @@ class _SignupPageState extends State<SignupPage> {
                           ],
                         ),
                       ]),
-                      // final user=UserModel(
-                      //   email:controller.firstName.text.trim(),
-                      //   email:controller.lastName.text.trim(),
-                      //   email:controller.email.text.trim(),
-                      //   email:controller.password.text.trim(),
-                      //   email:controller.phoneNo.text.trim(),
-                      //   email:controller.state.text.trim(),
-                      // )
-                      // signUpController.instance.phoneAuthentication(user.phoneNo);
+                      
                     ),
                     SizedBox(height: 20.0),
                     Padding(
@@ -309,6 +318,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           TextButton(
                             onPressed: () {
+                              
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
