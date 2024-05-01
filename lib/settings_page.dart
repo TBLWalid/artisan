@@ -30,6 +30,14 @@ class SettingsPage extends StatelessWidget {
         padding: EdgeInsets.all(16),
         children: [
           ListTile(
+            leading: Icon(Icons.info),
+            title: Text('Information'),
+            onTap: () {
+              // أضف أكواد للانتقال إلى صفحة الإشعارات أو تنفيذ إعدادات الإشعارات هنا
+            },
+          ),
+          Divider(),
+          ListTile(
             leading: Icon(Icons.notifications),
             title: Text('Notifications'),
             onTap: () {

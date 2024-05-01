@@ -22,106 +22,93 @@ class MyInformation extends StatefulWidget {
 class _MyInformationState extends State<MyInformation> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'My Information',
-          style: TextStyle(color: Colors.white),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: ListView(padding: EdgeInsets.all(2.0), children: [
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text('Name'),
+          subtitle: Text(name),
+          trailing: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () async {
+              final newName = await showDialog<String>(
+                context: context,
+                builder: (context) => _NameEditDialog(initialValue: name),
+              );
+              if (newName != null) {
+                setState(() {
+                  name = newName;
+                  widget.onNameChanged(newName);
+                });
+              }
+            },
+          ),
         ),
-        backgroundColor: Colors.brown[800],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.group),
+          title: Text('type'),
+          subtitle: Text(role),
+          trailing: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () async {
+              final newRole = await showDialog<String>(
+                context: context,
+                builder: (context) => _RoleEditDialog(initialValue: role),
+              );
+              if (newRole != null) {
+                setState(() {
+                  role = newRole;
+                  widget.onRoleChanged(newRole);
+                });
+              }
+            },
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 50),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Name'),
-            subtitle: Text(name),
-            trailing: IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () async {
-                final newName = await showDialog<String>(
-                  context: context,
-                  builder: (context) => _NameEditDialog(initialValue: name),
-                );
-                if (newName != null) {
-                  setState(() {
-                    name = newName;
-                    widget.onNameChanged(newName);
-                  });
-                }
-              },
-            ),
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text('email'),
+          subtitle: Text(email),
+          trailing: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () async {
+              final newemail = await showDialog<String>(
+                context: context,
+                builder: (context) => _EmailEditDialog(initialValue: email),
+              );
+              if (newemail != null) {
+                setState(() {
+                  email = newemail;
+                  widget.onNameChanged(newemail);
+                });
+              }
+            },
           ),
-          ListTile(
-            leading: Icon(Icons.group),
-            title: Text('type'),
-            subtitle: Text(role),
-            trailing: IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () async {
-                final newRole = await showDialog<String>(
-                  context: context,
-                  builder: (context) => _RoleEditDialog(initialValue: role),
-                );
-                if (newRole != null) {
-                  setState(() {
-                    role = newRole;
-                    widget.onRoleChanged(newRole);
-                  });
-                }
-              },
-            ),
+        ),
+        Divider(),
+        ListTile(
+          leading: Icon(Icons.person),
+          title: Text('Numero tel'),
+          subtitle: Text(ntel),
+          trailing: IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () async {
+              final newntel = await showDialog<String>(
+                context: context,
+                builder: (context) => _PhoneEditDialog(initialValue: ntel),
+              );
+              if (newntel != null) {
+                setState(() {
+                  ntel = newntel;
+                  widget.onNameChanged(newntel);
+                });
+              }
+            },
           ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('email'),
-            subtitle: Text(email),
-            trailing: IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () async {
-                final newemail = await showDialog<String>(
-                  context: context,
-                  builder: (context) => _EmailEditDialog(initialValue: email),
-                );
-                if (newemail != null) {
-                  setState(() {
-                    email = newemail;
-                    widget.onNameChanged(newemail);
-                  });
-                }
-              },
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Numero tel'),
-            subtitle: Text(ntel),
-            trailing: IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () async {
-                final newntel = await showDialog<String>(
-                  context: context,
-                  builder: (context) => _PhoneEditDialog(initialValue: ntel),
-                );
-                if (newntel != null) {
-                  setState(() {
-                    ntel = newntel;
-                    widget.onNameChanged(newntel);
-                  });
-                }
-              },
-            ),
-          ),
-        ],
-      ),
+        ),
+      ]),
     );
   }
 }

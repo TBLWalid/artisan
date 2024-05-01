@@ -1,7 +1,7 @@
 import 'package:artisans_app/func.dart';
 import 'package:artisans_app/home_page.dart';
 import 'package:artisans_app/main.dart';
-import 'package:artisans_app/verified_email.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

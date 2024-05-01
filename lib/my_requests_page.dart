@@ -22,8 +22,15 @@ class MyRequestsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Orders'),
-        backgroundColor: Color.fromARGB(255, 236, 237, 219),
+        title: Text('My Orders', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.brown[800],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: ListView.builder(
         itemCount: orders.length,

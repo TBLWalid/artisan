@@ -10,7 +10,6 @@ class infoprofile extends StatefulWidget {
 }
 
 class _infoprofileState extends State<infoprofile> {
-  
   // List<QueryDocumentSnapshot> data=[];
   // getData()async{
   //   QuerySnapshot querySnapshot =
@@ -19,7 +18,7 @@ class _infoprofileState extends State<infoprofile> {
   //   .get();
   //   data.addAll(querySnapshot.docs);
   //   setState(() {
-      
+
   //   });
   // }
   @override
@@ -32,9 +31,7 @@ class _infoprofileState extends State<infoprofile> {
           ListTile(
             leading: Icon(Icons.email_outlined),
             title: Text('ayoubbelme2003@gmail.com'),
-            onTap: () {
-              
-            },
+            onTap: () {},
           ),
           Divider(),
           ListTile(

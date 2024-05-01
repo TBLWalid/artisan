@@ -4,7 +4,9 @@ import 'package:artisans_app/info_profile.dart';
 import 'package:artisans_app/my_information.dart';
 import 'package:artisans_app/pic_profile.dart';
 import 'package:artisans_app/review_profile.dart';
+import 'my_information.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'create_poste.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -32,8 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
       _image = img;
     });
   }
-  
-  
 
   @override
   // void initState(){
@@ -147,78 +147,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      RatingBar.builder(
-                        initialRating: 3, // التقييم الافتراضي
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemSize: 30,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {
-                          // يمكنك التعامل مع التقييم المحدث هنا
-                        },
-                      ),
                     ],
                   ),
                 ],
               ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    leading: Icon(Icons.language),
-                    title: Text('My Information'),
-                    onTap: () async {
-                      final updatedName = await Navigator.push<String>(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyInformation(
-                            onNameChanged: (newName) {
-                              setState(() {
-                                name = newName;
-                              });
-                            },
-                            onRoleChanged: (newRole) {
-                              setState(() {
-                                role = newRole;
-                              });
-                            },
-                          ),
-                        ),
-                      );
-
-                      if (updatedName != null) {
-                        setState(() {
-                          name = updatedName;
-                        });
-                      }
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    leading: Icon(Icons.language),
-                    title: Text('My Requests'),
-                    onTap: () {
-                      // Navigate to My Requests page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyRequestsPage()),
-                      );
-                    },
-                  ),
-                )
-              ],
             ),
             TabBar(tabs: [
               Tab(
@@ -236,10 +168,30 @@ class _ProfilePageState extends State<ProfilePage> {
             Expanded(
                 child: TabBarView(children: [
               picprofile(),
-              infoprofile(),
+              MyInformation(
+                onNameChanged: (newName) {
+                  setState(() {
+                    name = newName;
+                  });
+                },
+                onRoleChanged: (newRole) {
+                  setState(() {
+                    role = newRole;
+                  });
+                },
+              ),
               reviewprofile(),
             ]))
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CreatepostPage()),
+            );
+          },
+          child: Icon(Icons.add),
         ),
       ),
     );
