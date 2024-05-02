@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'settings_page.dart';
 import 'profile_page.dart';
+import 'domaine_page.dart';
 import 'login_page.dart';
 import 'my_requests_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -181,7 +182,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 236, 236, 165),
       // appBar: AppBar(
       //   actions: [
       //     IconButton(
@@ -205,8 +205,9 @@ class _MyHomePageState extends State<MyHomePage> {
             _selectedIndex = index;
           });
         },
-        selectedItemColor: Color.fromARGB(255, 0, 0, 0),
-        unselectedItemColor: Color.fromARGB(255, 107, 107, 107),
+        backgroundColor: Colors.brown[800],
+        selectedItemColor: Colors.brown[800],
+        unselectedItemColor: Color.fromARGB(255, 114, 114, 112),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

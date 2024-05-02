@@ -1,26 +1,34 @@
 import 'dart:typed_data';
 import 'package:artisans_app/func.dart';
-import 'package:artisans_app/info_profile.dart';
 import 'package:artisans_app/my_information.dart';
 import 'package:artisans_app/pic_profile.dart';
 import 'package:artisans_app/review_profile.dart';
-import 'my_information.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'create_poste.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
-import 'listes/liste_poste.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'my_requests_page.dart';
 import 'signup_page.dart';
-import 'package:artisans_app/btn.dart';
+
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 String role = 'Client';
 
+class Artisan {
+  final String name;
+  final String profession;
+  final String location;
+
+  Artisan(
+      {required this.name, required this.profession, required this.location});
+}
+
 class ProfilePage extends StatefulWidget {
+  //final Artisan artisan;
+
+  //ProfilePage({required this.artisan});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
