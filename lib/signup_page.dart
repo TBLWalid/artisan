@@ -2,7 +2,7 @@ import 'package:artisans_app/func.dart';
 import 'package:artisans_app/home_page.dart';
 import 'package:artisans_app/language_switch_page.dart';
 import 'package:artisans_app/main.dart';
-import 'package:artisans_app/verified_email.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';

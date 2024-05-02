@@ -1,4 +1,3 @@
-import 'package:artisans_app/verified_email.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:artisans_app/main.dart';

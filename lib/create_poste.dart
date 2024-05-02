@@ -24,19 +24,11 @@ class CreatepostPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'What\'s happening?',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 12.0),
                     TextFormField(
                       maxLines: 5,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Write your post here...',
+                        hintText: 'Description',
                       ),
                     ),
                     SizedBox(height: 12.0),
@@ -68,7 +60,7 @@ class CreatepostPage extends StatelessWidget {
                       onPressed: () {
                         // Implement post functionality
                       },
-                      child: Text('Post'),
+                      child: Text('ajouter'),
                     ),
                   ],
                 ),

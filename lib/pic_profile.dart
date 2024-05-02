@@ -21,8 +21,6 @@ class _picprofileState extends State<picprofile> {
           padding: const EdgeInsets.all(2.0),
           child: Container(
             color: Colors.grey,
-            
-            
           ),
         );
       },

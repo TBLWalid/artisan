@@ -55,11 +55,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              Container(),
 
-              SizedBox(
-                height: 10,
-              ),
               // searchBar
               Padding(
                 padding: const EdgeInsets.all(15.0),

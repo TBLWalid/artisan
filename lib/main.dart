@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'settings_page.dart';
 import 'profile_page.dart';
-import 'post_page.dart';
-import 'login_page.dart'; // استيراد صفحة LoginPage
+import 'login_page.dart';
+import 'my_requests_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    PostPage(),
+    MyRequestsPage(),
     ProfilePage(),
     SettingsPage(), // إضافة صفحة LoginPage
   ];
@@ -214,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.my_library_books),
-            label: '',
+            label: 'MyRequests',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),

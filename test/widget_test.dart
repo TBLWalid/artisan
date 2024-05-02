@@ -9,8 +9,11 @@ import 'package:artisans_app/language_switch_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+<<<<<<< HEAD
 // import 'package:projectmemoire/main.dart';
 
+=======
+>>>>>>> 0934244e6e262c2fad4935f4fc33d5f7fb77e841
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
