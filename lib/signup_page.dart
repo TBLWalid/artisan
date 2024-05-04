@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'login_page.dart';
@@ -29,13 +30,17 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _domainController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   late String name;
   late String email;
   late String password;
+  late String Domain;
   late String state;
   bool spinner = false;
-  final _firestore=FirebaseFirestore.instance;
+  String dropdownValue = 'Wilaya';
+
+  final _firestore = FirebaseFirestore.instance;
 // void getinfo()async{
 //   final infos = await _firestore.collection('users').get();
 //   for (var info in infos.docs){
@@ -43,16 +48,16 @@ class _SignupPageState extends State<SignupPage> {
 //   }
 // }
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+final user = FirebaseAuth.instance.currentUser;
   // Future<void> addUser() {
   //   // Call the user's CollectionReference to add a new user
   //   return users
   //       .add({
-  //         'first_name': _firstnameController.text, 
-  //         'last_name': _lastnameController.text, 
-  //         'email': _emailController.text, 
+  //         'first_name': _firstnameController.text,
+  //         'last_name': _lastnameController.text,
+  //         'email': _emailController.text,
   //         'phoneNo': _phoneController.text,
-  //         'state': _stateController.text, 
+  //         'state': _stateController.text,
   //       })
   //       .then((value) => print("User Added"))
   //       .catchError((error) => print("Failed to add user: $error"));
@@ -213,6 +218,26 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     SizedBox(height: 25.0),
                     TextFormField(
+                      controller: _domainController,
+                      keyboardType: TextInputType.text,
+                      autofocus: false,
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey.withOpacity(0.1),
+                        hintText: 'Domain',
+                        hintStyle: TextStyle(
+                          color: Colors.grey[800],
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 15.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 25.0),
+                    TextFormField(
                       controller: _stateController,
                       keyboardType: TextInputType.text,
                       autofocus: false,
@@ -231,6 +256,72 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                     ),
+
+                    // Container(
+
+                    //   width: 320,
+                    //   height: 53,
+                    //   decoration: BoxDecoration(
+
+                    //       color: Colors.grey.withOpacity(0.1),
+                    //       border: Border.all(color: Colors.black),
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   child: DropdownButton<String>(
+                    //     value: dropdownValue,
+                    //     onChanged: (newValue) {
+                    //       setState(() {
+                    //         dropdownValue = newValue!;
+
+                    //       });
+                    //     },
+                    //     items: <String>[
+                    //       'Wilaya',
+                    //       'Adrar',
+                    //       'Chlef',
+                    //       'Laghouat',
+                    //       'Oum El Bouaki',
+                    //       'Batna',
+                    //       'Bijaya',
+                    //       'Biskra',
+                    //       'Bechar',
+                    //       'Blida',
+                    //       'Bouira',
+                    //       'Tamenrasset',
+                    //       'Tebassa',
+                    //       'Tlemcen',
+                    //       'Tiaret',
+                    //       'Tizi ouzou',
+                    //       'Alger',
+                    //       'Djelfa',
+                    //       'Jijel',
+                    //       'Setif',
+                    //       'Saida',
+                    //       'Skikda',
+                    //       'Sidi Bel Abbas',
+                    //       'Annaba',
+                    //       'Guelma',
+                    //       'Constantine',
+                    //       'Medea'
+                    //     ].map<DropdownMenuItem<String>>((String value) {
+                    //       return DropdownMenuItem<String>(
+
+                    //         value: value,
+
+                    //         child: Padding(
+                    //           padding:
+                    //               const EdgeInsets.symmetric(horizontal: 20.0),
+                    //           child: Text(value),
+                    //         ),
+                    //       );
+                    //     }).toList(),
+                    //     style: TextStyle(
+                    //       color: Colors.black,
+                    //       // Change text color
+                    //       fontSize: 18.0, // Change font size
+                    //     ),
+                    //   ),
+                    // ),
+
                     SizedBox(height: 24.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -258,11 +349,12 @@ class _SignupPageState extends State<SignupPage> {
                           );
                           // addUser();
                           _firestore.collection('users').add({
-                            'first_name': _firstnameController.text, 
-                            'last_name': _lastnameController.text, 
-                            'email': _emailController.text, 
+                            'full_name': _firstnameController.text,
+                            'last_name': _lastnameController.text,
+                            'email': _emailController.text,
                             'phoneNo': _phoneController.text,
-                            'state': _stateController.text, 
+                            'profession': _domainController.text,
+                            'state': _stateController.text,
                           });
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
@@ -274,9 +366,11 @@ class _SignupPageState extends State<SignupPage> {
                           print(e);
                         }
                         ;
-                        
+                        if (user != null) {
+  
+  // ... access other relevant properties
+}
                       },
-                      
                       child: Stack(alignment: Alignment.center, children: [
                         Text(
                           'Sign Up',
@@ -301,7 +395,6 @@ class _SignupPageState extends State<SignupPage> {
                           ],
                         ),
                       ]),
-                      
                     ),
                     SizedBox(height: 20.0),
                     Padding(
@@ -318,7 +411,6 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

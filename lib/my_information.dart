@@ -33,23 +33,23 @@ class MyInformation extends StatefulWidget {
 }
 
 class _MyInformationState extends State<MyInformation> {
-final userId = FirebaseAuth.instance.currentUser!.uid;
-  List <QueryDocumentSnapshot> data=[];
+  final userId = FirebaseAuth.instance.currentUser!.uid;
+  List<QueryDocumentSnapshot> data = [];
 
-  getdata()async{
-QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-     .collection('users')
-     .get();
-     data.addAll(querySnapshot.docs);
-     setState(() {
-       
-     });
+  getdata() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('users').get();
+    data.addAll(querySnapshot.docs);
+    setState(() {});
   }
+
   @override
-  void initState(){
+  void initState() {
     getdata();
     super.initState();
   }
+ 
+
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -228,6 +228,7 @@ class _RoleEditDialogState extends State<_RoleEditDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context); // Close the dialog without saving
+          
           },
           child: Text('Cancel'),
         ),
