@@ -1,20 +1,10 @@
-import 'package:artisans_app/func.dart';
-import 'package:artisans_app/home_page.dart';
-import 'package:artisans_app/language_switch_page.dart';
 import 'package:artisans_app/main.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'login_page.dart';
-import 'home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:artisans_app/models/user_model.dart';
+
+import 'login_page.dart';
 
 String name = '';
 
@@ -41,27 +31,9 @@ class _SignupPageState extends State<SignupPage> {
   String dropdownValue = 'Wilaya';
 
   final _firestore = FirebaseFirestore.instance;
-// void getinfo()async{
-//   final infos = await _firestore.collection('users').get();
-//   for (var info in infos.docs){
-// print(info.data());
-//   }
-// }
+
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-final user = FirebaseAuth.instance.currentUser;
-  // Future<void> addUser() {
-  //   // Call the user's CollectionReference to add a new user
-  //   return users
-  //       .add({
-  //         'first_name': _firstnameController.text,
-  //         'last_name': _lastnameController.text,
-  //         'email': _emailController.text,
-  //         'phoneNo': _phoneController.text,
-  //         'state': _stateController.text,
-  //       })
-  //       .then((value) => print("User Added"))
-  //       .catchError((error) => print("Failed to add user: $error"));
-  // }
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +83,6 @@ final user = FirebaseAuth.instance.currentUser;
                               hintStyle: TextStyle(
                                 color: Colors.grey[800],
                               ),
-                              // prefixIcon: Icon(Icons.data_usage_rounded),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 15.0),
                               border: OutlineInputBorder(
@@ -139,7 +110,6 @@ final user = FirebaseAuth.instance.currentUser;
                               hintStyle: TextStyle(
                                 color: Colors.grey[800],
                               ),
-                              // prefixIcon: Icon(Icons.data_usage_rounded),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 15.0),
                               border: OutlineInputBorder(
@@ -256,77 +226,9 @@ final user = FirebaseAuth.instance.currentUser;
                         ),
                       ),
                     ),
-
-                    // Container(
-
-                    //   width: 320,
-                    //   height: 53,
-                    //   decoration: BoxDecoration(
-
-                    //       color: Colors.grey.withOpacity(0.1),
-                    //       border: Border.all(color: Colors.black),
-                    //       borderRadius: BorderRadius.circular(10)),
-                    //   child: DropdownButton<String>(
-                    //     value: dropdownValue,
-                    //     onChanged: (newValue) {
-                    //       setState(() {
-                    //         dropdownValue = newValue!;
-
-                    //       });
-                    //     },
-                    //     items: <String>[
-                    //       'Wilaya',
-                    //       'Adrar',
-                    //       'Chlef',
-                    //       'Laghouat',
-                    //       'Oum El Bouaki',
-                    //       'Batna',
-                    //       'Bijaya',
-                    //       'Biskra',
-                    //       'Bechar',
-                    //       'Blida',
-                    //       'Bouira',
-                    //       'Tamenrasset',
-                    //       'Tebassa',
-                    //       'Tlemcen',
-                    //       'Tiaret',
-                    //       'Tizi ouzou',
-                    //       'Alger',
-                    //       'Djelfa',
-                    //       'Jijel',
-                    //       'Setif',
-                    //       'Saida',
-                    //       'Skikda',
-                    //       'Sidi Bel Abbas',
-                    //       'Annaba',
-                    //       'Guelma',
-                    //       'Constantine',
-                    //       'Medea'
-                    //     ].map<DropdownMenuItem<String>>((String value) {
-                    //       return DropdownMenuItem<String>(
-
-                    //         value: value,
-
-                    //         child: Padding(
-                    //           padding:
-                    //               const EdgeInsets.symmetric(horizontal: 20.0),
-                    //           child: Text(value),
-                    //         ),
-                    //       );
-                    //     }).toList(),
-                    //     style: TextStyle(
-                    //       color: Colors.black,
-                    //       // Change text color
-                    //       fontSize: 18.0, // Change font size
-                    //     ),
-                    //   ),
-                    // ),
-
                     SizedBox(height: 24.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        // لون الخلفية
-                        // لون النص عند التفاعل
                         backgroundColor: Colors.brown[600],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -347,9 +249,9 @@ final user = FirebaseAuth.instance.currentUser;
                             MaterialPageRoute(
                                 builder: (context) => MyHomePage()),
                           );
-                          // addUser();
+
                           _firestore.collection('users').add({
-                            'full_name': _firstnameController.text,
+                            'first_name': _firstnameController.text,
                             'last_name': _lastnameController.text,
                             'email': _emailController.text,
                             'phoneNo': _phoneController.text,
@@ -365,11 +267,6 @@ final user = FirebaseAuth.instance.currentUser;
                         } catch (e) {
                           print(e);
                         }
-                        ;
-                        if (user != null) {
-  
-  // ... access other relevant properties
-}
                       },
                       child: Stack(alignment: Alignment.center, children: [
                         Text(

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'profile_page.dart';
+import 'show_profile_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -56,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
                   .collection('users')
-                  .where('name', isEqualTo: searchQuery)
+                  .where('first_name', isEqualTo: searchQuery)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -92,22 +92,26 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget buildArtisanCard(Map<String, dynamic> artisanData) {
+    String firstName = artisanData['first_name'];
+    String lastName = artisanData['last_name'];
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: Card(
+        color: Colors.brown[100],
         elevation: 4,
         child: ListTile(
           leading: CircleAvatar(
+            radius: 30.0,
             backgroundImage: AssetImage('images/walid.jpg'),
           ),
-          title: Text(artisanData['name']),
+          title: Text('$firstName $lastName'),
           subtitle:
               Text('${artisanData['profession']} - ${artisanData['state']}'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ProfilePage(),
+                builder: (context) => ShowProfilePage(),
               ),
             );
           },

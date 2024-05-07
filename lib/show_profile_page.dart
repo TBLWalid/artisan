@@ -1,18 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:artisans_app/func.dart';
-import 'package:artisans_app/my_information.dart';
 import 'package:artisans_app/pic_profile.dart';
 import 'package:artisans_app/review_profile.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'bbb.dart';
-import 'create_poste.dart';
-//import 'nameuser.dart';
+import 'info_profile.dart';
 import 'signup_page.dart';
 
 String role = 'Client';
@@ -21,42 +15,21 @@ class Artisan {
   final String name;
   final String profession;
   final String location;
-  late FirebaseAuth _auth;
-  final _user = Rxn<User>();
-  late Stream<User?> _authStateChanges;
-
-  final user = FirebaseAuth.instance.currentUser;
 
   Artisan(
       {required this.name, required this.profession, required this.location});
 }
 
-class ProfilePage extends StatefulWidget {
+class ShowProfilePage extends StatefulWidget {
+  //final Artisan artisan;
+
+  //ProfilePage({required this.artisan});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  String userName = '';
-
-  @override
-  void initState() {
-    getUserData();
-    super.initState();
-  }
-
-  Future<void> getUserData() async {
-    final user = FirebaseAuth.instance.currentUser;
-    final userData = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user!.uid)
-        .get();
-    setState(() {
-      userName =
-          userData['first_name']; // استخراج اسم المستخدم من البيانات المستردة
-    });
-  }
-
+class _ProfilePageState extends State<ShowProfilePage> {
   Uint8List? _image;
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -66,29 +39,30 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  @override
+  // void initState(){
+  //   getData();
+  //   super.initState();
+  // }
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.brown[800],
-          title: Text(
-            'My Profile',
-            style: TextStyle(color: Colors.white),
-          ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            color: Colors.white,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.only(top: 20.0),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back),
+                color: const Color.fromARGB(255, 0, 0, 0),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
               child: Row(
                 children: [
                   SizedBox(
@@ -105,13 +79,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             backgroundImage:
                                 AssetImage('images/blank_profile.png'),
                           ),
-                    Positioned(
-                      child: IconButton(
-                          onPressed: selectImage,
-                          icon: Icon(Icons.add_a_photo)),
-                      bottom: -10,
-                      left: 80,
-                    ),
                   ]),
                   SizedBox(
                     width: 20.0,
@@ -120,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        userName,
+                        name,
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -142,28 +109,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                         spreadRadius: 2,
                                         blurRadius: 3)
                                   ]),
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  // لون الخلفية
-                                  // لون النص عند التفاعل
-                                  backgroundColor:
-                                      Color.fromARGB(248, 41, 120, 128),
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CheckUserIdScreen()));
-                                },
-                                child: Text(
-                                  'follow',
-                                  style: TextStyle(
+                              // padding: EdgeInsets.all(12),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 35, vertical: 6),
+                              child: Text(
+                                'request',
+                                style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 24,
-                                  ),
-                                ),
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
                               )),
                           SizedBox(
                             width: 10,
@@ -207,30 +161,10 @@ class _ProfilePageState extends State<ProfilePage> {
             Expanded(
                 child: TabBarView(children: [
               picprofile(),
-              MyInformation(
-                onNameChanged: (newName) {
-                  setState(() {
-                    name = newName;
-                  });
-                },
-                onRoleChanged: (newRole) {
-                  setState(() {
-                    role = newRole;
-                  });
-                },
-              ),
+              infoprofile(),
               reviewprofile(),
             ]))
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreatepostPage()),
-            );
-          },
-          child: Icon(Icons.add),
         ),
       ),
     );

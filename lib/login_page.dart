@@ -1,9 +1,11 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/material.dart';
 import 'package:artisans_app/main.dart';
-import 'signup_page.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+
+import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -110,8 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        // لون الخلفية
-                        // لون النص عند التفاعل
                         backgroundColor: Colors.brown[600],
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -119,8 +119,51 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.symmetric(
                             vertical: 15.0, horizontal: 50.0),
                       ),
-                      onPressed: () {
-                        // Implement login functionality here
+                      onPressed: () async {
+                        try {
+                          final credential = await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: email, password: password);
+
+                          final user = FirebaseAuth.instance.currentUser;
+                          if (user != null) {
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .set({
+                              'userId': user.uid,
+                            });
+
+                            // عرض معرف المستخدم الحالي
+                            print('User ID: ${user.uid}');
+                          }
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyHomePage()),
+                          );
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            print('No user found for that email.');
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.error,
+                              animType: AnimType.rightSlide,
+                              title: 'Error',
+                              desc: 'No user found for that email.',
+                            ).show();
+                          } else if (e.code == 'wrong-password') {
+                            print('Wrong password provided for that user.');
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.error,
+                              animType: AnimType.rightSlide,
+                              title: 'Error',
+                              desc: 'Wrong password provided for that user.',
+                            ).show();
+                          }
+                        }
                       },
                       child: TextButton(
                         onPressed: () async {

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'profile_page.dart';
+import 'show_profile_page.dart';
 
 class DomainePage extends StatefulWidget {
   final String category;
@@ -14,7 +14,6 @@ class DomainePage extends StatefulWidget {
 
 class _DomainePageState extends State<DomainePage> {
   late Stream<QuerySnapshot> artisansStream;
-
   @override
   void initState() {
     super.initState();
@@ -116,7 +115,7 @@ class _DomainePageState extends State<DomainePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            artisanData['name'],
+                            artisanData['full_name'],
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -145,7 +144,7 @@ class _DomainePageState extends State<DomainePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ProfilePage(),
+                                  builder: (context) => ShowProfilePage(),
                                 ),
                               );
                             },
