@@ -10,9 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'bbb.dart';
 import 'create_poste.dart';
-//import 'nameuser.dart';
 import 'signup_page.dart';
 
 String role = 'Client';
@@ -52,8 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
         .doc(user!.uid)
         .get();
     setState(() {
-      userName =
-          userData['first_name']; // استخراج اسم المستخدم من البيانات المستردة
+      userName = userData['full_name'];
     });
   }
 
@@ -102,8 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           )
                         : CircleAvatar(
                             radius: 60,
-                            backgroundImage:
-                                AssetImage('images/blank_profile.png'),
+                            backgroundImage: AssetImage('images/walid.jpg'),
                           ),
                     Positioned(
                       child: IconButton(
@@ -151,11 +147,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Color.fromARGB(248, 41, 120, 128),
                                 ),
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CheckUserIdScreen()));
+                                  // Navigator.push(
+                                  // context,
+                                  // MaterialPageRoute(
+                                  //    builder: (context) => aaa()));
                                 },
                                 child: Text(
                                   'follow',

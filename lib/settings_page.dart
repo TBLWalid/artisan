@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'NotificationDetailsPage.dart';
 import 'btn.dart';
-import 'nameuser.dart';
 
 class SettingsPage extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
@@ -37,8 +36,8 @@ class SettingsPage extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('Information'),
             onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => aaa()));
+              // Navigator.push(context,
+              //   MaterialPageRoute(builder: (context) => information_page()));
             },
           ),
           Divider(),

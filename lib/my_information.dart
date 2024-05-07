@@ -1,26 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'profile_page.dart';
-import 'signup_page.dart';
 
-String email = 'tebbalwali8@gmail.com';
-String ntel = '+213560629569';
+String role = 'Client';
 
 class MyInformation extends StatefulWidget {
   final ValueChanged<String> onNameChanged;
   final ValueChanged<String> onRoleChanged;
-
-// getData()async{
-//   QuerySnapshot querySnapshot =
-//   await FirebaseFirestore.instance
-//   .collection('users')
-//   .get();
-//   data.addAll(querySnapshot.docs);
-//   setState(() {
-
-//   });
-// }
 
   const MyInformation({
     Key? key,
@@ -33,23 +19,30 @@ class MyInformation extends StatefulWidget {
 }
 
 class _MyInformationState extends State<MyInformation> {
-  final userId = FirebaseAuth.instance.currentUser!.uid;
-  List<QueryDocumentSnapshot> data = [];
-
-  getdata() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('users').get();
-    data.addAll(querySnapshot.docs);
-    setState(() {});
-  }
+  String userName = '';
+  String ntel = '';
+  String email = '';
 
   @override
   void initState() {
-    getdata();
     super.initState();
+    getUserData();
   }
- 
 
+  Future<void> getUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+    setState(() {
+      userName = userData['full_name'];
+      email = userData['email'];
+      ntel = userData['phoneNo'];
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -57,17 +50,17 @@ class _MyInformationState extends State<MyInformation> {
         ListTile(
           leading: Icon(Icons.person),
           title: Text('Name'),
-          subtitle: Text(name),
+          subtitle: Text(userName),
           trailing: IconButton(
             icon: Icon(Icons.edit),
             onPressed: () async {
               final newName = await showDialog<String>(
                 context: context,
-                builder: (context) => _NameEditDialog(initialValue: name),
+                builder: (context) => _NameEditDialog(initialValue: userName),
               );
               if (newName != null) {
                 setState(() {
-                  name = newName;
+                  userName = newName;
                   widget.onNameChanged(newName);
                 });
               }
@@ -77,7 +70,7 @@ class _MyInformationState extends State<MyInformation> {
         Divider(),
         ListTile(
           leading: Icon(Icons.group),
-          title: Text('type'),
+          title: Text('Type'),
           subtitle: Text(role),
           trailing: IconButton(
             icon: Icon(Icons.edit),
@@ -97,20 +90,20 @@ class _MyInformationState extends State<MyInformation> {
         ),
         Divider(),
         ListTile(
-          leading: Icon(Icons.person),
-          title: Text('email'),
+          leading: Icon(Icons.email),
+          title: Text('Email'),
           subtitle: Text(email),
           trailing: IconButton(
             icon: Icon(Icons.edit),
             onPressed: () async {
-              final newemail = await showDialog<String>(
+              final newEmail = await showDialog<String>(
                 context: context,
                 builder: (context) => _EmailEditDialog(initialValue: email),
               );
-              if (newemail != null) {
+              if (newEmail != null) {
                 setState(() {
-                  email = newemail;
-                  widget.onNameChanged(newemail);
+                  email = newEmail;
+                  widget.onNameChanged(newEmail);
                 });
               }
             },
@@ -118,20 +111,20 @@ class _MyInformationState extends State<MyInformation> {
         ),
         Divider(),
         ListTile(
-          leading: Icon(Icons.person),
-          title: Text('Numero tel'),
+          leading: Icon(Icons.phone),
+          title: Text('Phone Number'),
           subtitle: Text(ntel),
           trailing: IconButton(
             icon: Icon(Icons.edit),
             onPressed: () async {
-              final newntel = await showDialog<String>(
+              final newNtel = await showDialog<String>(
                 context: context,
                 builder: (context) => _PhoneEditDialog(initialValue: ntel),
               );
-              if (newntel != null) {
+              if (newNtel != null) {
                 setState(() {
-                  ntel = newntel;
-                  widget.onNameChanged(newntel);
+                  ntel = newNtel;
+                  widget.onNameChanged(newNtel);
                 });
               }
             },
@@ -228,7 +221,6 @@ class _RoleEditDialogState extends State<_RoleEditDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context); // Close the dialog without saving
-          
           },
           child: Text('Cancel'),
         ),
@@ -269,18 +261,18 @@ class _PhoneEditDialogState extends State<_PhoneEditDialog> {
       content: TextField(
         controller: _controller,
         decoration: InputDecoration(labelText: 'Phone Number'),
-        keyboardType: TextInputType.phone, // تحديد نوع لوحة المفاتيح للأرقام
+        keyboardType: TextInputType.phone,
       ),
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pop(context); // إغلاق الحوار دون حفظ التغييرات
+            Navigator.pop(context); // Close the dialog without saving
           },
           child: Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
-            Navigator.pop(context, _controller.text); // إرجاع القيمة الجديدة
+            Navigator.pop(context, _controller.text); // Return the new value
           },
           child: Text('Save'),
         ),
@@ -315,19 +307,18 @@ class _EmailEditDialogState extends State<_EmailEditDialog> {
       content: TextField(
         controller: _controller,
         decoration: InputDecoration(labelText: 'Email Address'),
-        keyboardType: TextInputType
-            .emailAddress, // تحديد نوع لوحة المفاتيح للبريد الإلكتروني
+        keyboardType: TextInputType.emailAddress,
       ),
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pop(context); // إغلاق الحوار دون حفظ التغييرات
+            Navigator.pop(context); // Close the dialog without saving
           },
           child: Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
-            Navigator.pop(context, _controller.text); // إرجاع القيمة الجديدة
+            Navigator.pop(context, _controller.text); // Return the new value
           },
           child: Text('Save'),
         ),

@@ -249,15 +249,24 @@ class _SignupPageState extends State<SignupPage> {
                             MaterialPageRoute(
                                 builder: (context) => MyHomePage()),
                           );
+                          final user = FirebaseAuth.instance.currentUser;
 
-                          _firestore.collection('users').add({
-                            'first_name': _firstnameController.text,
-                            'last_name': _lastnameController.text,
-                            'email': _emailController.text,
-                            'phoneNo': _phoneController.text,
-                            'profession': _domainController.text,
-                            'state': _stateController.text,
-                          });
+                          if (user != null) {
+                            final String fullName = _firstnameController.text +
+                                ' ' +
+                                _lastnameController.text;
+                            _firestore.collection('users').doc(user.uid).set({
+                              'first_name': _firstnameController.text,
+                              'last_name': _lastnameController.text,
+                              'full_name': fullName,
+                              'email': _emailController.text,
+                              'phoneNo': _phoneController.text,
+                              'profession': _domainController.text,
+                              'state': _stateController.text,
+                            });
+                          } else {
+                            // يمكنك إضافة رسالة خطأ هنا أو إجراء إجراء آخر حسب الحالة
+                          }
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             print('The password provided is too weak.');
