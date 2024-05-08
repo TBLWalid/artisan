@@ -128,38 +128,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Row(
                         children: [
-                          Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(248, 41, 120, 128),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black26,
-                                        spreadRadius: 2,
-                                        blurRadius: 3)
-                                  ]),
-                              padding: EdgeInsets.symmetric(horizontal: 12),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  // لون الخلفية
-                                  // لون النص عند التفاعل
-                                  backgroundColor:
-                                      Color.fromARGB(248, 41, 120, 128),
-                                ),
-                                onPressed: () {
-                                  // Navigator.push(
-                                  // context,
-                                  // MaterialPageRoute(
-                                  //    builder: (context) => aaa()));
-                                },
-                                child: Text(
-                                  'follow',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                              )),
                           SizedBox(
                             width: 10,
                           ),

@@ -1,10 +1,11 @@
 import 'package:artisans_app/firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
+import 'login_page.dart';
 import 'my_requests_page.dart';
 import 'profile_page.dart';
 import 'settings_page.dart';
@@ -153,85 +154,64 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-
-  final List<Widget> _pages = [
-    HomePage(),
-    MyRequestsPage(),
-    ProfilePage(),
-    SettingsPage(),
-  ];
-  final _auth = FirebaseAuth.instance;
-  late User? signedInUser; // تحديث نوع المستخدم إلى User?
-  late String? userId; // إضافة متغير لتخزين معرّف المستخدم في Firestore
+  bool _isLoggedIn = false; // Set default login status to false
 
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    checkLoginStatus(); // Check login status on app start
   }
 
-  void getCurrentUser() async {
-    // تحديث نوع الدالة لتكون async
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        setState(() {
-          signedInUser = user;
-        });
-        await fetchUserID(); // استدعاء الدالة الجديدة للحصول على معرّف المستخدم في Firestore
-        print('Signed in user email: ${signedInUser!.email}');
-        print(
-            'User ID in Firestore: $userId'); // طباعة معرّف المستخدم في Firestore
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> fetchUserID() async {
-    if (signedInUser != null) {
-      DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(signedInUser!.uid)
-          .get();
-      setState(() {
-        userId = snapshot.id;
-      });
-    }
+  void checkLoginStatus() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    setState(() {
+      _isLoggedIn = user != null; // Update value based on user existence
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _pages;
+    if (_isLoggedIn) {
+      // If user is logged in
+      _pages = [
+        HomePage(),
+        MyRequestsPage(),
+        ProfilePage(),
+        SettingsPage(),
+      ];
+    } else {
+      // If user is not logged in
+      _pages = [
+        HomePage(),
+        LoginPage(),
+        SettingsPage(),
+      ];
+    }
+
     return Scaffold(
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+      bottomNavigationBar: ConvexAppBar(
+        style: TabStyle.reactCircle,
+        backgroundColor: Colors.brown[800],
+        activeColor: Colors.brown[100],
+        items: _isLoggedIn
+            ? [
+                TabItem(icon: Icons.home, title: 'Home'),
+                TabItem(icon: Icons.my_library_books, title: 'My Requests'),
+                TabItem(icon: Icons.account_circle, title: 'Profile'),
+                TabItem(icon: Icons.settings, title: 'Settings'),
+              ]
+            : [
+                TabItem(icon: Icons.home, title: 'Home'),
+                TabItem(icon: Icons.account_circle, title: 'Login'),
+                TabItem(icon: Icons.settings, title: 'Settings'),
+              ],
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });
         },
-        backgroundColor: Colors.brown[800],
-        selectedItemColor: Colors.brown[800],
-        unselectedItemColor: Color.fromARGB(255, 114, 114, 112),
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.my_library_books),
-            label: 'MyRequests',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
       ),
     );
   }
