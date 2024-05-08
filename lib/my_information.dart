@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'profile_page.dart';
 import 'signup_page.dart';
 
@@ -33,14 +34,29 @@ class MyInformation extends StatefulWidget {
 }
 
 class _MyInformationState extends State<MyInformation> {
-  final userId = FirebaseAuth.instance.currentUser!.uid;
-  List<QueryDocumentSnapshot> data = [];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late String _uid;
+  late String _name;
+  late String _email;
+  late String _phone;
 
-  getdata() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('users').get();
-    data.addAll(querySnapshot.docs);
-    setState(() {});
+  // final userId = FirebaseAuth.instance.currentUser!.uid;
+  // List<QueryDocumentSnapshot> data = [];
+
+// Or using snapshots for real-time updates
+
+  void getdata() async {
+    User? user = _auth.currentUser;
+    _uid = user!.uid;
+    // print('user.email ${user.email}');
+    final DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    // setState(() {
+    //   _name = userDoc.get('last_name');
+    //   _email = userDoc.get('email');
+    // });
+
+    print('name ${user.email}');
   }
 
   @override
@@ -48,7 +64,6 @@ class _MyInformationState extends State<MyInformation> {
     getdata();
     super.initState();
   }
- 
 
   Widget build(BuildContext context) {
     return Padding(
@@ -56,7 +71,7 @@ class _MyInformationState extends State<MyInformation> {
       child: ListView(padding: EdgeInsets.all(2.0), children: [
         ListTile(
           leading: Icon(Icons.person),
-          title: Text('Name'),
+          title: Text(name),
           subtitle: Text(name),
           trailing: IconButton(
             icon: Icon(Icons.edit),
@@ -228,7 +243,6 @@ class _RoleEditDialogState extends State<_RoleEditDialog> {
         TextButton(
           onPressed: () {
             Navigator.pop(context); // Close the dialog without saving
-          
           },
           child: Text('Cancel'),
         ),
