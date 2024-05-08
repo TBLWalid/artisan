@@ -115,7 +115,6 @@ class _HomePageState extends State<HomePage> {
                                 categoryToProfession[categories[index]] ?? '';
                             return InkWell(
                               onTap: () async {
-                                // افتح صفحة التفاصيل للنوع المختار
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
