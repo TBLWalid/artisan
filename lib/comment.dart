@@ -1,7 +1,4 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:artisans_app/signup_page.dart';
 
 class comment extends StatelessWidget {
   final String text;
@@ -25,21 +22,17 @@ class comment extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(4),
-
       ),
       child: Column(
         children: [
-           Text(text),
-           Row(
+          Text(text),
+          Row(
             children: [
               Text(user),
               Text(' . '),
               Text(time),
-
-
             ],
-           )
-
+          )
         ],
       ),
     );

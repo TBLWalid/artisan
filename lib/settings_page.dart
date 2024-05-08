@@ -41,17 +41,18 @@ class SettingsPage extends StatelessWidget {
             },
           ),
           Divider(),
-          ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notifications'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => NotificationDetailsPage()),
-              );
-            },
-          ),
+          if (isLoggedIn)
+            ListTile(
+              leading: Icon(Icons.notifications),
+              title: Text('Notifications'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NotificationDetailsPage()),
+                );
+              },
+            ),
           Divider(),
           ListTile(
             leading: Icon(Icons.language),
@@ -73,7 +74,7 @@ class SettingsPage extends StatelessWidget {
             },
             trailing: buttonOnOff(),
           ),
-          Divider(),
+          if (!isLoggedIn) Divider(),
           if (!isLoggedIn)
             ListTile(
               leading: Icon(Icons.person),

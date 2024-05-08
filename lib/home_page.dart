@@ -5,7 +5,6 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'domaine_page.dart';
 import 'listes/liste_categories.dart';
-import 'signup_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -34,18 +33,8 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        'Hi, $name',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       // Search
-                      SizedBox(
-                        height: 20,
-                      ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [

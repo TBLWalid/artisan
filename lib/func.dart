@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:artisans_app/profile_page.dart';
-import 'package:path/path.dart';
-import 'login_page.dart';
-import 'package:artisans_app/main.dart';
 
 pickImage(ImageSource source) async {
   final ImagePicker _imagePicker = ImagePicker();

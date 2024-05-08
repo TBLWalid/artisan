@@ -1,6 +1,5 @@
 import 'package:artisans_app/main.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -121,23 +120,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       onPressed: () async {
                         try {
-                          final credential = await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: email, password: password);
-
-                          final user = FirebaseAuth.instance.currentUser;
-                          if (user != null) {
-                            await FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(user.uid)
-                                .set({
-                              'userId': user.uid,
-                            });
-
-                            // عرض معرف المستخدم الحالي
-                            print('User ID: ${user.uid}');
-                          }
-
                           Navigator.push(
                             context,
                             MaterialPageRoute(
