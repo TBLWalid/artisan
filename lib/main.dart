@@ -1,13 +1,13 @@
 import 'package:artisans_app/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'home_page.dart';
-import 'settings_page.dart';
-import 'profile_page.dart';
-import 'domaine_page.dart';
-import 'login_page.dart';
 import 'my_requests_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'profile_page.dart';
+import 'settings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -158,45 +158,51 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     MyRequestsPage(),
     ProfilePage(),
-    SettingsPage(), // إضافة صفحة LoginPage
+    SettingsPage(),
   ];
   final _auth = FirebaseAuth.instance;
-  late User signedInUser;
+  late User? signedInUser; // تحديث نوع المستخدم إلى User?
+  late String? userId; // إضافة متغير لتخزين معرّف المستخدم في Firestore
+
+  @override
   void initState() {
     super.initState();
     getCurrentUser();
   }
 
-  void getCurrentUser() {
+  void getCurrentUser() async {
+    // تحديث نوع الدالة لتكون async
     try {
       final user = _auth.currentUser;
       if (user != null) {
-        signedInUser = user;
-        print(signedInUser.email);
+        setState(() {
+          signedInUser = user;
+        });
+        await fetchUserID(); // استدعاء الدالة الجديدة للحصول على معرّف المستخدم في Firestore
+        print('Signed in user email: ${signedInUser!.email}');
+        print(
+            'User ID in Firestore: $userId'); // طباعة معرّف المستخدم في Firestore
       }
     } catch (e) {
       print(e);
     }
   }
 
+  Future<void> fetchUserID() async {
+    if (signedInUser != null) {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(signedInUser!.uid)
+          .get();
+      setState(() {
+        userId = snapshot.id;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(Icons.notifications_none),
-      //       onPressed: () {
-      //         // افتح صفحة البحث
-      //       },
-      //     ),
-      //   ],
-      //   title: Text(
-      //     'Artisanss',
-      //     style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0)),
-      //   ),
-      //   backgroundColor: Color.fromARGB(255, 236, 237, 219),
-      // ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

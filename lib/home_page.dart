@@ -1,3 +1,4 @@
+import 'package:artisans_app/NotificationDetailsPage.dart';
 import 'package:artisans_app/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -81,10 +82,11 @@ class _HomePageState extends State<HomePage> {
                             margin: EdgeInsets.only(right: 10),
                             child: GestureDetector(
                               onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                // MaterialPageRoute(
-                                //  builder: (context) => Notification()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NotificationDetailsPage()));
                               },
                               child: Icon(
                                 Icons.notifications,

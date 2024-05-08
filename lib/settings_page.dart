@@ -1,9 +1,10 @@
+import 'package:artisans_app/language_switch_page.dart';
 import 'package:artisans_app/login_page.dart';
 import 'package:artisans_app/signup_page.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'language_switch_page.dart';
+import 'package:flutter/material.dart';
+
+import 'NotificationDetailsPage.dart';
 import 'btn.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -11,6 +12,8 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoggedIn = _auth.currentUser != null;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.brown[800],
@@ -33,7 +36,8 @@ class SettingsPage extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('Information'),
             onTap: () {
-              // أضف أكواد للانتقال إلى صفحة الإشعارات أو تنفيذ إعدادات الإشعارات هنا
+              // Navigator.push(context,
+              //   MaterialPageRoute(builder: (context) => information_page()));
             },
           ),
           Divider(),
@@ -41,8 +45,11 @@ class SettingsPage extends StatelessWidget {
             leading: Icon(Icons.notifications),
             title: Text('Notifications'),
             onTap: () {
-              
-              // أضف أكواد للانتقال إلى صفحة الإشعارات أو تنفيذ إعدادات الإشعارات هنا
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NotificationDetailsPage()),
+              );
             },
           ),
           Divider(),
@@ -52,8 +59,9 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyApp()),
+                MaterialPageRoute(builder: (context) => language()),
               );
+              // Add code to navigate to language page
             },
           ),
           Divider(),
@@ -61,42 +69,44 @@ class SettingsPage extends StatelessWidget {
             leading: Icon(Icons.dark_mode),
             title: Text('Dark Mode'),
             onTap: () {
-              // أضف أكواد لتفعيل أو تعطيل وضع الظلام هنا
+              // Add code to enable/disable dark mode
             },
             trailing: buttonOnOff(),
           ),
           Divider(),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Signup'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SignupPage()),
-              );
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.login),
-            title: Text('Login'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
-            onTap: () {
-              _auth.signOut();
-              Navigator.pop(context);
-              // أضف أكواد لتسجيل الخروج من التطبيق هنا
-            },
-          ),
+          if (!isLoggedIn)
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Signup'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignupPage()),
+                );
+              },
+            ),
+          if (!isLoggedIn) Divider(),
+          if (!isLoggedIn)
+            ListTile(
+              leading: Icon(Icons.login),
+              title: Text('Login'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+          if (isLoggedIn) Divider(),
+          if (isLoggedIn)
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                _auth.signOut();
+                Navigator.pop(context);
+              },
+            ),
         ],
       ),
     );
