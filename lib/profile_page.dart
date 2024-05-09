@@ -1,5 +1,6 @@
 import 'dart:typed_data';
-
+import 'package:artisans_app/comment.dart';
+import 'package:artisans_app/comment.dart';
 import 'package:artisans_app/func.dart';
 import 'package:artisans_app/my_information.dart';
 import 'package:artisans_app/pic_profile.dart';
@@ -99,7 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           )
                         : CircleAvatar(
                             radius: 60,
-                            backgroundImage: AssetImage('images/walid.jpg'),
+                            backgroundImage:
+                                AssetImage('images/blank_profile.png'),
                           ),
                     Positioned(
                       child: IconButton(
@@ -182,7 +184,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   });
                 },
               ),
-              reviewprofile(),
+              CommentPage(
+                postId: '',
+              ),
             ]))
           ],
         ),

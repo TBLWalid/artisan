@@ -93,19 +93,19 @@ class _DomainePageState extends State<DomainePage> {
         children: [
           Container(
             width: 350.0,
-            height: 180.0,
+            height: 150.0,
             child: Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.only(top: 5.0, bottom: 0, left: 8),
                 child: Row(
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
                       child: Image.asset(
                         'images/walid.jpg',
-                        width: 150.0,
-                        height: 150.0,
+                        width: 100.0,
+                        height: 100.0,
                         fit: BoxFit.cover,
                       ),
                     ),

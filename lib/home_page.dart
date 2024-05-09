@@ -1,5 +1,6 @@
 import 'package:artisans_app/NotificationDetailsPage.dart';
 import 'package:artisans_app/search_page.dart';
+import 'package:artisans_app/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -33,8 +34,20 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      // Search
-
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 12.0, bottom: 12),
+                            child: Text(
+                              'Hi, ${name}',
+                              style:
+                                  TextStyle(fontSize: 30, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -43,24 +56,41 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.brown[600],
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => SearchPage()));
-                              },
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.white,
-                              ),
+                            padding: EdgeInsets.only(
+                                left: 15, right: 160, top: 10, bottom: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SearchPage()));
+                                  },
+                                  child: Icon(
+                                    Icons.search,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  'search',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
                             width: 12,
                           ),
+
                           //Notificayion
                           Container(
                             decoration: BoxDecoration(
@@ -84,6 +114,15 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, top: 10),
+                        child: Text(
+                          'we will help you to choose the best craftsman closest to your home...',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white.withOpacity(0.6)),
+                        ),
                       ),
                     ],
                   ),
