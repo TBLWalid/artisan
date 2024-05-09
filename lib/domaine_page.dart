@@ -61,8 +61,11 @@ class _DomainePageState extends State<DomainePage> {
           ),
           Container(
             height: 60.0,
-            width: 150.0,
-            color: Colors.brown[300],
+            width: 350.0,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                color: Colors.brown[600]),
+            // color: Colors.brown[300],
             child: PopupMenuButton<String>(
               initialValue: 'all Wilaya', // تعيين القيمة الافتراضية للعنوان
               onSelected: (String value) {
@@ -315,8 +318,9 @@ class _DomainePageState extends State<DomainePage> {
                 child: Text(
                   selectedWilaya,
                   style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
                   ),
                 ),
               ),

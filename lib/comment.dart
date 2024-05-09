@@ -1,4 +1,6 @@
 import 'package:artisans_app/signup_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:artisans_app/profile_page.dart';
 
@@ -21,6 +23,7 @@ class _CommentPageState extends State<CommentPage> {
     // Replace this with your logic to fetch comments from database
     // based on postId
     setState(() {
+      getUserData();
       comments = [
         Comment(name: "ayoub belme", message: "This is a great post!"),
         Comment(name: "walid TBL", message: "Amazing!"),
@@ -33,7 +36,7 @@ class _CommentPageState extends State<CommentPage> {
     final commentText = _commentController.text;
     if (commentText.isNotEmpty) {
       setState(() {
-        comments.add(Comment(name: name, message: commentText));
+        comments.add(Comment(name: userName, message: commentText));
         _commentController.text = ""; // Clear text field
       });
       // Persist the comment to your data source (e.g., Firebase)
@@ -44,6 +47,29 @@ class _CommentPageState extends State<CommentPage> {
   void initState() {
     super.initState();
     _fetchComments(); // Fetch comments on page load
+  }
+
+  String userName = '';
+  String ntel = '';
+  String email = '';
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getUserData();
+  // }
+
+  Future<void> getUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+    setState(() {
+      userName = userData['full_name'];
+      email = userData['email'];
+      ntel = userData['phoneNo'];
+    });
   }
 
   @override

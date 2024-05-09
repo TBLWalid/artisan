@@ -7,12 +7,44 @@ import 'package:artisans_app/pic_profile.dart';
 import 'package:artisans_app/review_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'create_poste.dart';
 import 'signup_page.dart';
+
+final TextEditingController _nameImage = TextEditingController();
+final TextEditingController _bio = TextEditingController();
+
+final FirebaseStorage _storage = FirebaseStorage.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+class storedata {
+  Future<String> uploadImageToStorage(String childName, Uint8List file) async {
+    Reference ref = _storage.ref().child(childName);
+    UploadTask uploadTask = ref.putData(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadURL = await snapshot.ref.getDownloadURL();
+    return downloadURL;
+  }
+
+  Future<String> savedata(
+      {required String name,
+      required String bio,
+      required Uint8List file}) async {
+    String resp = 'some error occured';
+    try {
+      String imageURL = await uploadImageToStorage('profileImage', file);
+      await _firestore.collection('users').add({'imageLink': imageURL});
+      resp = 'success';
+    } catch (err) {
+      resp = err.toString();
+    }
+    return resp;
+  }
+}
 
 String role = 'Client';
 
@@ -64,6 +96,13 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  void saveprofile() async {
+    String name = _nameImage.text;
+    String bio = _bio.text;
+    String resp =
+        await storedata().savedata(name: name, bio: bio, file: _image!);
+  }
+
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
@@ -103,6 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             backgroundImage:
                                 AssetImage('images/blank_profile.png'),
                           ),
+                   
                     Positioned(
                       child: IconButton(
                           onPressed: selectImage,

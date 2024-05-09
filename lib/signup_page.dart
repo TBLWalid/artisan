@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'ProfilePicturePage.dart';
@@ -29,6 +30,9 @@ class _SignupPageState extends State<SignupPage> {
   late String state;
   bool spinner = false;
   String dropdownValue = 'Wilaya';
+
+  String domain = "option1";
+  String wilaya = "option1";
 
   final _firestore = FirebaseFirestore.instance;
 
@@ -167,62 +171,381 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     SizedBox(height: 25.0),
-                    TextFormField(
-                      controller: _phoneController,
-                      keyboardType: TextInputType.phone,
-                      autofocus: false,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
-                        hintText: 'Phone Number',
-                        hintStyle: TextStyle(
-                          color: Colors.grey[800],
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                    Container(
+                      width: 320,
+                      height: 53,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border:
+                              Border.all(width: 1, style: BorderStyle.solid),
+                          color: Colors.grey.withOpacity(0.1)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: DropdownButton<String>(
+                          value: domain,
+                         
+                          icon: Padding(
+                            padding: const EdgeInsets.only(left: 40.0),
+                            child: const Icon(
+                              Icons.arrow_drop_down_circle_outlined,
+                              color: Colors.brown,
+                              size: 29,
+                            ),
+                          ),
+                          underline: Container(
+                            height: 1,
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              value: "option1",
+                              child: Text("domain"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Aluminum",
+                              child: Text("Aluminum"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Painter",
+                              child: Text("Painter"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Plumber",
+                              child: Text("Plumber"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Air Conditioner Technician",
+                              child: Text("Air Conditioner Technician"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Carpenter",
+                              child: Text("Carpenter"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Applicance Repair Technician",
+                              child: Text("Applicance Repair Technician"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Electrician",
+                              child: Text("Electrician"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Cleaner",
+                              child: Text("Cleaner"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Landscaper",
+                              child: Text("Landscaper"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Roofing Contractor",
+                              child: Text("Roofing Contractor"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Pest Control Technician",
+                              child: Text("Pest Control Technician"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Flooring Installer",
+                              child: Text("Flooring Installer"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Glazier",
+                              child: Text("Glazier"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Security System Installer",
+                              child: Text("Security System Installer"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Furniture Assembler",
+                              child: Text("Furniture Assembler"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Mover",
+                              child: Text("Mover"),
+                            ),
+                            DropdownMenuItem(
+                              value: "Carpet Cleaner",
+                              child: Text("Carpet Cleaner"),
+                            ),
+                          ],
+                          onChanged: (newValue) {
+                            setState(() {
+                              domain = newValue!;
+                            });
+                          },
                         ),
                       ),
                     ),
+
                     SizedBox(height: 25.0),
-                    TextFormField(
-                      controller: _domainController,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
-                        hintText: 'Domain',
-                        hintStyle: TextStyle(
-                          color: Colors.grey[800],
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 25.0),
-                    TextFormField(
-                      controller: _stateController,
-                      keyboardType: TextInputType.text,
-                      autofocus: false,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
-                        hintText: 'State',
-                        hintStyle: TextStyle(
-                          color: Colors.grey[800],
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 15.0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                
+                    Container(
+                      width: 320,
+                      height: 53,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border:
+                              Border.all(width: 1, style: BorderStyle.solid),
+                          color: Colors.grey.withOpacity(0.1)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: DropdownButton<String>(
+                          value: wilaya,
+                          icon: Padding(
+                            padding: const EdgeInsets.only(left: 110.0),
+                            child: const Icon(
+                              Icons.arrow_drop_down_circle_outlined,
+                              color: Colors.brown,
+                              size: 29,
+                            ),
+                          ),
+                          underline: Container(
+                            height: 1,
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              value: 'option1',
+                              child: Text('state'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Adrar',
+                              child: Text('Adrar'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Chlef',
+                              child: Text('Chlef'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Laghouat',
+                              child: Text('Laghouat'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Oum El Bouaghi',
+                              child: Text('Oum El Bouaghi'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Batna',
+                              child: Text('Batna'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Bejaia',
+                              child: Text('Bejaia'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Biskra',
+                              child: Text('Biskra'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Bechar',
+                              child: Text('Bechar'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Blida',
+                              child: Text('Blida'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Bouira',
+                              child: Text('Bouira'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tamanrasset',
+                              child: Text('Tamanrasset'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tebessa',
+                              child: Text('Tebessa'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tlemcen',
+                              child: Text('Tlemcen'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tiaret',
+                              child: Text('Tiaret'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tizi Ouzou',
+                              child: Text('Tizi Ouzou'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Algiers',
+                              child: Text('Algiers'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Djelfa',
+                              child: Text('Djelfa'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Jijel',
+                              child: Text('Jijel'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Setif',
+                              child: Text('Setif'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Saïda',
+                              child: Text('Saïda'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Skikda',
+                              child: Text('Skikda'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Sidi Bel Abbes',
+                              child: Text('Sidi Bel Abbes'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Annaba',
+                              child: Text('Annaba'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Guelma',
+                              child: Text('Guelma'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Constantine',
+                              child: Text('Constantine'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Medea',
+                              child: Text('Medea'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Mostaganem',
+                              child: Text('Mostaganem'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Msila',
+                              child: Text('Msila'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Mascara',
+                              child: Text('Mascara'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Ouargla',
+                              child: Text('Ouargla'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Oran',
+                              child: Text('Oran'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'El Bayadh',
+                              child: Text('El Bayadh'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Illizi',
+                              child: Text('Illizi'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Bordj Bou Arreridj',
+                              child: Text('Bordj Bou Arreridj'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Boumerdes',
+                              child: Text('Boumerdes'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'El Tarf',
+                              child: Text('El Tarf'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tindouf',
+                              child: Text('Tindouf'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tissemsilt',
+                              child: Text('Tissemsilt'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'El Oued',
+                              child: Text('El Oued'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Khenchela',
+                              child: Text('Khenchela'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Souk Ahras',
+                              child: Text('Souk Ahras'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Tipaza',
+                              child: Text('Tipaza'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Mila',
+                              child: Text('Mila'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Aïn Defla',
+                              child: Text('Aïn Defla'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Naama',
+                              child: Text('Naama'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Aïn Temouchent',
+                              child: Text('Aïn Temouchent'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Ghardaia',
+                              child: Text('Ghardaia'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Relizane',
+                              child: Text('Relizane'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Timimoun',
+                              child: Text('Timimoun'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Bordj Badji Mokhtar',
+                              child: Text('Bordj Badji Mokhtar'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Ouled Djellal',
+                              child: Text('Ouled Djellal'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Béni Abbès',
+                              child: Text('Béni Abbès'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'In Salah',
+                              child: Text('In Salah'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'In Guezzam',
+                              child: Text('In Guezzam'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Touggourt',
+                              child: Text('Touggourt'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Djanet',
+                              child: Text('Djanet'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'El M’Ghaier',
+                              child: Text('El M’Ghaier'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'El Meniaa',
+                              child: Text('El Meniaa'),
+                            ),
+                          ],
+                          onChanged: (newValue) {
+                            setState(() {
+                              wilaya = newValue!;
+                            });
+                          },
                         ),
                       ),
                     ),
@@ -261,8 +584,9 @@ class _SignupPageState extends State<SignupPage> {
                               'full_name': fullName,
                               'email': _emailController.text,
                               'phoneNo': _phoneController.text,
-                              'profession': _domainController.text,
-                              'state': _stateController.text,
+                              // 'profession': _domainController.text,
+                              'profession': domain,
+                              'state': wilaya,
                             });
                           } else {
                             // يمكنك إضافة رسالة خطأ هنا أو إجراء إجراء آخر حسب الحالة

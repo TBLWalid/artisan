@@ -1,9 +1,43 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'main.dart';
+
+final TextEditingController _nameImage = TextEditingController();
+final TextEditingController _bio = TextEditingController();
+
+final FirebaseStorage _storage = FirebaseStorage.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+class storedata {
+  Future<String> uploadImageToStorage(String childName, Uint8List file) async {
+    Reference ref = _storage.ref().child(childName);
+    UploadTask uploadTask = ref.putData(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadURL = await snapshot.ref.getDownloadURL();
+    return downloadURL;
+  }
+
+  Future<String> savedata(
+      {required String name,
+      required String bio,
+      required Uint8List file}) async {
+    String resp = 'some error occured';
+    try {
+      String imageURL = await uploadImageToStorage('profileImage', file);
+      await _firestore.collection('users').add({'imageLink': imageURL});
+      resp = 'success';
+    } catch (err) {
+      resp = err.toString();
+    }
+    return resp;
+  }
+}
 
 class ProfilePicturePage extends StatefulWidget {
   @override

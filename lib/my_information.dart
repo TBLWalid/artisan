@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'profile_page.dart';
 import 'signup_page.dart';
 
-
 String role = 'Client';
 
 class MyInformation extends StatefulWidget {
@@ -24,36 +23,34 @@ class MyInformation extends StatefulWidget {
 }
 
 class _MyInformationState extends State<MyInformation> {
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  late String _uid;
-  late String _name;
-  late String _email;
-  late String _phone;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  // late String _uid;
+  // late String _name;
+  // late String _email;
+  // late String _phone;
 
   // final userId = FirebaseAuth.instance.currentUser!.uid;
   // List<QueryDocumentSnapshot> data = [];
 
 // Or using snapshots for real-time updates
 
-  void getdata() async {
-    User? user = _auth.currentUser;
-    _uid = user!.uid;
-    // print('user.email ${user.email}');
-    final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
-    // setState(() {
-    //   _name = userDoc.get('last_name');
-    //   _email = userDoc.get('email');
-    // });
+  // void getdata() async {
+  //   User? user = _auth.currentUser;
+  //   _uid = user!.uid;
+  //   // print('user.email ${user.email}');
+  //   final DocumentSnapshot userDoc =
+  //       await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+  //   // setState(() {
+  //   //   _name = userDoc.get('last_name');
+  //   //   _email = userDoc.get('email');
+  //   // });
 
-    print('name ${user.email}');
-  }
+  //   print('name ${user.email}');
+  // }
 
   String userName = '';
   String ntel = '';
   String email = '';
-
 
   @override
   void initState() {
@@ -81,12 +78,8 @@ class _MyInformationState extends State<MyInformation> {
       child: ListView(padding: EdgeInsets.all(2.0), children: [
         ListTile(
           leading: Icon(Icons.person),
-
-         
-
           title: Text('Name'),
           subtitle: Text(userName),
-
           trailing: IconButton(
             icon: Icon(Icons.edit),
             onPressed: () async {
