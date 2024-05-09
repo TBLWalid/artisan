@@ -22,7 +22,7 @@ class ArtisansApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: WelcomePage(), // يتم عرض واجهة يعفوف أولاً
+      home: WelcomePage(),
     );
   }
 }

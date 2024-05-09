@@ -1,9 +1,9 @@
-import 'package:artisans_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import 'ProfilePicturePage.dart';
 import 'login_page.dart';
 
 String name = '';
@@ -247,7 +247,7 @@ class _SignupPageState extends State<SignupPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyHomePage()),
+                                builder: (context) => ProfilePicturePage()),
                           );
                           final user = FirebaseAuth.instance.currentUser;
 

@@ -85,12 +85,28 @@ class _ProfilePicturePageState extends State<ProfilePicturePage> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.brown[600],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 50.0),
+              ),
               onPressed: () {
-                _goToHomePage();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyHomePage()));
               },
-              child: Text('Add'),
+              child: Stack(alignment: Alignment.center, children: [
+                Text(
+                  'Add',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ]),
             ),
           ],
         ),

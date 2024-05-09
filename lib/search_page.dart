@@ -18,14 +18,9 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown[800],
-        title: Text(
-          'Search',
-          style: TextStyle(color: Colors.white),
-        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.white,
+          color: const Color.fromARGB(255, 0, 0, 0),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -34,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (value) {
                 setState(() {
@@ -80,7 +75,8 @@ class _SearchPageState extends State<SearchPage> {
                     Map<String, dynamic> artisanData =
                         snapshot.data!.docs[index].data()
                             as Map<String, dynamic>;
-                    return buildArtisanCard(artisanData);
+                    return buildArtisanCard(
+                        artisanData, snapshot.data!.docs[index].id);
                   },
                 );
               },
@@ -91,7 +87,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget buildArtisanCard(Map<String, dynamic> artisanData) {
+  Widget buildArtisanCard(Map<String, dynamic> artisanData, String artisanId) {
     String firstName = artisanData['first_name'];
     String lastName = artisanData['last_name'];
     return Padding(
@@ -111,7 +107,10 @@ class _SearchPageState extends State<SearchPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ShowProfilePage(),
+                builder: (context) => ShowProfilePage(
+                  artisanId: artisanId,
+                  artisanName: '$firstName $lastName',
+                ),
               ),
             );
           },

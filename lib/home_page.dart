@@ -1,6 +1,7 @@
 import 'package:artisans_app/NotificationDetailsPage.dart';
 import 'package:artisans_app/search_page.dart';
-import 'package:artisans_app/signup_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -15,6 +16,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String _Name = '';
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
+  Future<void> getUserData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+    setState(() {
+      _Name = userData['first_name'];
+    });
+  }
+
   bool _isLoading = false; // يتحكم في عرض مؤشر التحميل
 
   @override
@@ -41,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                             padding:
                                 const EdgeInsets.only(left: 12.0, bottom: 12),
                             child: Text(
-                              'Hi, ${name}',
+                              'Hi, ${_Name}',
                               style:
                                   TextStyle(fontSize: 30, color: Colors.white),
                             ),
@@ -51,40 +71,39 @@ class _HomePageState extends State<HomePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.brown[600],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            padding: EdgeInsets.only(
-                                left: 15, right: 160, top: 10, bottom: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SearchPage()));
-                                  },
-                                  child: Icon(
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchPage()));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.brown[600],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: EdgeInsets.only(
+                                  left: 15, right: 160, top: 10, bottom: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(
                                     Icons.search,
                                     color: Colors.white,
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  'search',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ],
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Text(
+                                    'search',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -92,21 +111,21 @@ class _HomePageState extends State<HomePage> {
                           ),
 
                           //Notificayion
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.brown[600],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            padding: EdgeInsets.all(12),
-                            margin: EdgeInsets.only(right: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NotificationDetailsPage()));
-                              },
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NotificationDetailsPage()));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.brown[600],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              margin: EdgeInsets.only(right: 10),
                               child: Icon(
                                 Icons.notifications,
                                 color: Colors.white,
