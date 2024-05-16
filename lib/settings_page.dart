@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'NotificationDetailsPage.dart';
 import 'btn.dart';
+import 'main.dart';
 
 class SettingsPage extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
@@ -33,18 +34,27 @@ class SettingsPage extends StatelessWidget {
         padding: EdgeInsets.all(16),
         children: [
           ListTile(
-            leading: Icon(Icons.info),
-            title: Text('Information'),
+            leading: Image.asset('images/info.png'),
+            title: Text(
+              'Information',
+              style: TextStyle(fontSize: 20),
+            ),
             onTap: () {
               // Navigator.push(context,
               //   MaterialPageRoute(builder: (context) => information_page()));
             },
           ),
-          Divider(),
+          if (isLoggedIn)
+            SizedBox(
+              height: 25,
+            ),
           if (isLoggedIn)
             ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text('Notifications'),
+              leading: Image.asset('images/cloche-de-notification.png'),
+              title: Text(
+                'Notifications',
+                style: TextStyle(fontSize: 20),
+              ),
               onTap: () {
                 Navigator.push(
                   context,
@@ -53,10 +63,15 @@ class SettingsPage extends StatelessWidget {
                 );
               },
             ),
-          Divider(),
+          SizedBox(
+            height: 25,
+          ),
           ListTile(
-            leading: Icon(Icons.language),
-            title: Text('Language'),
+            leading: Image.asset('images/langues.png'),
+            title: Text(
+              'Language',
+              style: TextStyle(fontSize: 20),
+            ),
             onTap: () {
               Navigator.push(
                 context,
@@ -65,20 +80,30 @@ class SettingsPage extends StatelessWidget {
               // Add code to navigate to language page
             },
           ),
-          Divider(),
+          SizedBox(
+            height: 25,
+          ),
           ListTile(
-            leading: Icon(Icons.dark_mode),
-            title: Text('Dark Mode'),
+            leading: Image.asset('images/noun-dark-mode-5399506.png'),
+            title: Text(
+              'Dark Mode',
+              style: TextStyle(fontSize: 20),
+            ),
             onTap: () {
               // Add code to enable/disable dark mode
             },
             trailing: buttonOnOff(),
           ),
-          if (!isLoggedIn) Divider(),
+          SizedBox(
+            height: 25,
+          ),
           if (!isLoggedIn)
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Signup'),
+              leading: Image.asset('images/add-friend.png'),
+              title: Text(
+                'Signup',
+                style: TextStyle(fontSize: 20),
+              ),
               onTap: () {
                 Navigator.push(
                   context,
@@ -86,11 +111,17 @@ class SettingsPage extends StatelessWidget {
                 );
               },
             ),
-          if (!isLoggedIn) Divider(),
+          if (!isLoggedIn)
+            SizedBox(
+              height: 25,
+            ),
           if (!isLoggedIn)
             ListTile(
-              leading: Icon(Icons.login),
-              title: Text('Login'),
+              leading: Image.asset('images/mot-de-passe.png'),
+              title: Text(
+                'Login',
+                style: TextStyle(fontSize: 20),
+              ),
               onTap: () {
                 Navigator.push(
                   context,
@@ -98,14 +129,22 @@ class SettingsPage extends StatelessWidget {
                 );
               },
             ),
-          if (isLoggedIn) Divider(),
+          if (!isLoggedIn)
+            SizedBox(
+              height: 25,
+            ),
           if (isLoggedIn)
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
+              leading: Image.asset(
+                  'images/se-deconnecter.png'), // استبدل 'images/se-deconnecter.png' بالمسار الدقيق للصورة
+              title: Text(
+                'Logout',
+                style: TextStyle(fontSize: 20),
+              ),
               onTap: () {
                 _auth.signOut();
-                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => WelcomePage()));
               },
             ),
         ],

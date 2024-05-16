@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'info_profile.dart';
@@ -38,17 +40,39 @@ class ShowProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ShowProfilePage> {
   Uint8List? _image;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late String profession = '';
+  late String state = '';
 
-  // void selectImage() async {
-  //   Uint8List img = await pickImage(ImageSource.gallery);
+  // دالة لاسترجاع بيانات الحرفي من Firestore باستخدام المعرف
+  void fetchData() async {
+    // استعلام Firestore للحصول على بيانات الحرفي باستخدام المعرف
+    var snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.artisanId)
+        .get();
 
-  //   setState(() {
-  //     _image = img;
-  //   });
-  // }
+    // استخراج البيانات من snapshot وتعيينها في المتغيرات المناسبة
+    setState(() {
+      profession = snapshot['profession'];
+      state = snapshot['state'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData(); // استدعاء الدالة لاسترجاع بيانات الحرفي عند تهيئة الحالة
+  }
 
   @override
   Widget build(BuildContext context) {
+    User? user = _auth.currentUser;
+    String? clientId;
+    if (user != null) {
+      clientId = user.uid; // استخدام معرف المستخدم الحالي كـ clientId
+    }
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -99,56 +123,13 @@ class _ProfilePageState extends State<ShowProfilePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        role,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Row(
+                      Column(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(248, 41, 120, 128),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  spreadRadius: 2,
-                                  blurRadius: 3,
-                                )
-                              ],
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 35, vertical: 6),
-                            child: Text(
-                              'request',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(248, 41, 120, 128),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  spreadRadius: 2,
-                                  blurRadius: 3,
-                                ),
-                              ],
-                            ),
-                            padding: EdgeInsets.all(12),
-                            child: Icon(
-                              Icons.message,
-                              color: Colors.white,
-                            ),
-                          ),
+                          Text(
+                            '  $profession',
+                            style: TextStyle(fontSize: 20.0),
+                          ), // استخدام المهنة من بيانات Firestore
+                          Text(state), // استخدام الولاية من بيانات Firestore
                         ],
                       ),
                     ],
@@ -162,10 +143,10 @@ class _ProfilePageState extends State<ShowProfilePage> {
                   icon: Icon(Icons.image),
                 ),
                 Tab(
-                  icon: Icon(Icons.info_outlined),
+                  icon: Icon(Icons.call),
                 ),
                 Tab(
-                  icon: Icon(Icons.star_rate_rounded),
+                  icon: Icon(Icons.star_outline),
                 ),
               ],
             ),
@@ -174,8 +155,8 @@ class _ProfilePageState extends State<ShowProfilePage> {
                 children: [
                   picprofile(),
                   infoprofile(
-                      artisanId:
-                          widget.artisanId), // تمرير المعرف هنا كمعامل مسمى
+                    artisanId: widget.artisanId,
+                  ),
                   reviewprofile(),
                 ],
               ),

@@ -1,52 +1,48 @@
 import 'dart:typed_data';
-import 'package:artisans_app/comment.dart';
+
 import 'package:artisans_app/comment.dart';
 import 'package:artisans_app/func.dart';
 import 'package:artisans_app/my_information.dart';
 import 'package:artisans_app/pic_profile.dart';
-import 'package:artisans_app/review_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'create_poste.dart';
-import 'signup_page.dart';
 
 final TextEditingController _nameImage = TextEditingController();
 final TextEditingController _bio = TextEditingController();
 
-final FirebaseStorage _storage = FirebaseStorage.instance;
+//final FirebaseStorage _storage = FirebaseStorage.instance;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class storedata {
-  Future<String> uploadImageToStorage(String childName, Uint8List file) async {
-    Reference ref = _storage.ref().child(childName);
-    UploadTask uploadTask = ref.putData(file);
-    TaskSnapshot snapshot = await uploadTask;
-    String downloadURL = await snapshot.ref.getDownloadURL();
-    return downloadURL;
-  }
+//class storedata {
+//  Future<String> uploadImageToStorage(String childName, Uint8List file) async {
+//    Reference ref = _storage.ref().child(childName);
+//   UploadTask uploadTask = ref.putData(file);
+//    TaskSnapshot snapshot = await uploadTask;
+//    String downloadURL = await snapshot.ref.getDownloadURL();
+//    return downloadURL;
+// }
 
-  Future<String> savedata(
-      {required String name,
-      required String bio,
-      required Uint8List file}) async {
-    String resp = 'some error occured';
-    try {
-      String imageURL = await uploadImageToStorage('profileImage', file);
-      await _firestore.collection('users').add({'imageLink': imageURL});
-      resp = 'success';
-    } catch (err) {
-      resp = err.toString();
-    }
-    return resp;
-  }
-}
-
-String role = 'Client';
+//Future<String> savedata(
+//    {required String name,
+//   required String bio,
+//    required Uint8List file}) async {
+//  String resp = 'some error occured';
+//  try {
+//    String imageURL = await uploadImageToStorage('profileImage', file);
+//    await _firestore.collection('users').add({'imageLink': imageURL});
+//    resp = 'success';
+//  } catch (err) {
+//    resp = err.toString();
+//  }
+//  return resp;
+// }
+//}
 
 class Artisan {
   final String name;
@@ -96,12 +92,12 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
-  void saveprofile() async {
-    String name = _nameImage.text;
-    String bio = _bio.text;
-    String resp =
-        await storedata().savedata(name: name, bio: bio, file: _image!);
-  }
+  // void saveprofile() async {
+  //   String name = _nameImage.text;
+  //   String bio = _bio.text;
+  //   String resp =
+  //       await storedata().savedata(name: name, bio: bio, file: _image!);
+  // }
 
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -142,7 +138,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             backgroundImage:
                                 AssetImage('images/blank_profile.png'),
                           ),
-                   
                     Positioned(
                       child: IconButton(
                           onPressed: selectImage,
@@ -164,29 +159,35 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        role,
-                        style: TextStyle(fontSize: 18),
-                      ),
                       Row(
                         children: [
                           SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
+                          InkWell(
+                            // onTap: () {
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) => ChatPage()));
+                            // },
+                            child: Container(
+                              decoration: BoxDecoration(
                                 color: Color.fromARGB(248, 41, 120, 128),
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Colors.black26,
-                                      spreadRadius: 2,
-                                      blurRadius: 3)
-                                ]),
-                            padding: EdgeInsets.all(12),
-                            child: Icon(
-                              Icons.message,
-                              color: Colors.white,
+                                    color: Colors.black26,
+                                    spreadRadius: 2,
+                                    blurRadius: 3,
+                                  ),
+                                ],
+                              ),
+                              padding: EdgeInsets.all(12),
+                              child: Icon(
+                                Icons.message,
+                                color: Colors.white,
+                              ),
                             ),
                           )
                         ],
@@ -213,11 +214,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: TabBarView(children: [
               picprofile(),
               MyInformation(
-                onNameChanged: (newName) {
-                  setState(() {
-                    name = newName;
-                  });
-                },
                 onRoleChanged: (newRole) {
                   setState(() {
                     role = newRole;

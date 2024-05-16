@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import 'ProfilePicturePage.dart';
@@ -46,6 +45,16 @@ class _SignupPageState extends State<SignupPage> {
         title: Text(
           'signup',
           style: TextStyle(color: Colors.white),
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         backgroundColor: Colors.brown[800],
       ),
@@ -171,6 +180,26 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     SizedBox(height: 25.0),
+                    TextFormField(
+                      controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                      autofocus: false,
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey.withOpacity(0.1),
+                        hintText: 'Phone Number',
+                        hintStyle: TextStyle(
+                          color: Colors.grey[800],
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 15.0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 25.0),
                     Container(
                       width: 320,
                       height: 53,
@@ -183,7 +212,6 @@ class _SignupPageState extends State<SignupPage> {
                         padding: const EdgeInsets.all(16.0),
                         child: DropdownButton<String>(
                           value: domain,
-                         
                           icon: Padding(
                             padding: const EdgeInsets.only(left: 40.0),
                             child: const Icon(
@@ -277,9 +305,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                     ),
-
                     SizedBox(height: 25.0),
-                
                     Container(
                       width: 320,
                       height: 53,

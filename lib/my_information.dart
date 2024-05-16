@@ -2,19 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/widgets.dart';
-import 'profile_page.dart';
-import 'signup_page.dart';
-
 String role = 'Client';
 
 class MyInformation extends StatefulWidget {
-  final ValueChanged<String> onNameChanged;
   final ValueChanged<String> onRoleChanged;
 
   const MyInformation({
     Key? key,
-    required this.onNameChanged,
     required this.onRoleChanged,
   }) : super(key: key);
 
@@ -90,7 +84,6 @@ class _MyInformationState extends State<MyInformation> {
               if (newName != null) {
                 setState(() {
                   userName = newName;
-                  widget.onNameChanged(newName);
                 });
               }
             },
@@ -132,7 +125,6 @@ class _MyInformationState extends State<MyInformation> {
               if (newEmail != null) {
                 setState(() {
                   email = newEmail;
-                  widget.onNameChanged(newEmail);
                 });
               }
             },
@@ -153,7 +145,6 @@ class _MyInformationState extends State<MyInformation> {
               if (newNtel != null) {
                 setState(() {
                   ntel = newNtel;
-                  widget.onNameChanged(newNtel);
                 });
               }
             },

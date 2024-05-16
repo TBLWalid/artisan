@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class infoprofile extends StatefulWidget {
   final String artisanId; // استقبال المعرف هنا
@@ -12,8 +13,6 @@ class infoprofile extends StatefulWidget {
 
 class _infoprofileState extends State<infoprofile> {
   late String email = '';
-  late String profession = '';
-  late String state = '';
   late String phoneNo = '';
 
   // دالة لاسترجاع بيانات الحرفي من Firestore باستخدام المعرف
@@ -27,8 +26,6 @@ class _infoprofileState extends State<infoprofile> {
     // استخراج البيانات من snapshot وتعيينها في المتغيرات المناسبة
     setState(() {
       email = snapshot['email'];
-      profession = snapshot['profession'];
-      state = snapshot['state'];
       phoneNo = snapshot['phoneNo'];
     });
   }
@@ -46,28 +43,68 @@ class _infoprofileState extends State<infoprofile> {
       child: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          ListTile(
-            leading: Icon(Icons.email_outlined),
-            title: Text(email), // استخدام البريد الإلكتروني من بيانات Firestore
-            onTap: () {},
+          InkWell(
+            onTap: () {
+              launch('tel:$phoneNo');
+            },
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.brown[600],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Colors.grey.withOpacity(0.5),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.phone,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 16),
+                  Text(
+                    phoneNo,
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+            // تخصيص اللون عند الضغط
+            splashColor:
+                const Color.fromARGB(255, 255, 255, 255).withOpacity(0.5),
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.work_outline),
-            title: Text(profession), // استخدام المهنة من بيانات Firestore
-            onTap: () {},
+          SizedBox(
+            height: 10.0,
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.location_on_outlined),
-            title: Text(state), // استخدام الولاية من بيانات Firestore
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text(phoneNo), // استخدام رقم الهاتف من بيانات Firestore
-            onTap: () {},
+          InkWell(
+            onTap: () {
+              launch('mailto:$email');
+            },
+            child: Container(
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.brown[600],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Colors.grey.withOpacity(0.5),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.email_outlined, color: Colors.white),
+                  SizedBox(width: 16),
+                  Text(
+                    email,
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
+            ),
+            // تخصيص اللون عند الضغط
+            splashColor: Colors.blue.withOpacity(0.5),
           ),
         ],
       ),

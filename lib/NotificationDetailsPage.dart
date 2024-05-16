@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NotificationDetailsPage extends StatelessWidget {
@@ -5,94 +7,60 @@ class NotificationDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Notifications',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.brown[800],
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        title: Text('All Client IDs'),
       ),
-      body: ListView.builder(
-        itemCount: 10, // عدد الإشعارات
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              _showNotificationDetails(context, index);
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('client0')
+            .doc('client0')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          }
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+          if (!snapshot.hasData) {
+            return Text('No data found');
+          }
+
+          // Retrieve the document data
+          var documentData = snapshot.data!.data() as Map<String, dynamic>?;
+
+          // Check if documentData is null or empty
+          if (documentData == null || documentData.isEmpty) {
+            return Text('No document data found');
+          }
+
+          // Extract client IDs
+          List<String> clientIds = [];
+          documentData.forEach((key, value) {
+            if (key != 'clientId') {
+              clientIds.add(value);
+            }
+          });
+
+          // Check if there are any client IDs
+          if (clientIds.isEmpty) {
+            return Text('No client IDs found');
+          }
+
+          return ListView.builder(
+            itemCount: clientIds.length,
+            itemBuilder: (context, index) {
+              var clientId = clientIds[index];
+
+              // Display clientId in ListTile
+              return ListTile(
+                title: Text('Client ID: $clientId'),
+              );
             },
-            child: Card(
-              elevation: 3, // رفعية البطاقة
-              margin: EdgeInsets.symmetric(
-                  vertical: 8, horizontal: 16), // هامش البطاقة
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.brown[800], // لون الصورة الدائرية
-                  child: Icon(
-                    Icons.notifications, // أيقونة الإشعار
-                    color: Colors.white, // لون أيقونة الإشعار
-                  ),
-                ),
-                title: Text(
-                  'Notification Title $index', // عنوان الإشعار
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  'Notification Description $index', // وصف الإشعار
-                ),
-                trailing: Text(
-                  '5m', // الوقت منذ الإشعار
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ),
-            ),
           );
         },
       ),
-    );
-  }
-
-  void _showNotificationDetails(BuildContext context, int index) {
-    // Replace this with your logic to show notification details
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Notification Details'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Customer Name: John Doe'),
-              Text('Customer Location: New York'),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Logic for accepting the request
-                      Navigator.pop(context);
-                    },
-                    child: Text('Accept'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Logic for rejecting the request
-                      Navigator.pop(context);
-                    },
-                    child: Text('Reject'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
