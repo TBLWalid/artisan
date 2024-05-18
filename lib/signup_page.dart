@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -593,29 +594,35 @@ class _SignupPageState extends State<SignupPage> {
                             password: password,
                           );
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfilePicturePage()),
-                          );
                           final user = FirebaseAuth.instance.currentUser;
 
                           if (user != null) {
                             final String fullName = _firstnameController.text +
                                 ' ' +
                                 _lastnameController.text;
+                            String? token =
+                                await FirebaseMessaging.instance.getToken();
+
                             _firestore.collection('users').doc(user.uid).set({
                               'first_name': _firstnameController.text,
                               'last_name': _lastnameController.text,
                               'full_name': fullName,
                               'email': _emailController.text,
                               'phoneNo': _phoneController.text,
-                              // 'profession': _domainController.text,
                               'profession': domain,
                               'state': wilaya,
+                              'token': token ??
+                                  '', // Use empty string as default if token is null
                             });
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfilePicturePage()),
+                            );
                           } else {
-                            // يمكنك إضافة رسالة خطأ هنا أو إجراء إجراء آخر حسب الحالة
+                            // Handle the case when user is null
+                            // You can add error message or perform any other action here
                           }
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
@@ -627,30 +634,34 @@ class _SignupPageState extends State<SignupPage> {
                           print(e);
                         }
                       },
-                      child: Stack(alignment: Alignment.center, children: [
-                        Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(9),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 70, 49, 41)),
-                              child: const Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                              ),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
                             ),
-                          ],
-                        ),
-                      ]),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(9),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color.fromARGB(255, 70, 49, 41),
+                                ),
+                                child: const Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(height: 20.0),
                     Padding(

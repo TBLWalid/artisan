@@ -41,16 +41,15 @@ class ShowProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ShowProfilePage> {
   Uint8List? _image;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late String profession = '';
   late String state = '';
 
   // دالة لاسترجاع بيانات الحرفي من Firestore باستخدام المعرف
   void fetchData() async {
     // استعلام Firestore للحصول على بيانات الحرفي باستخدام المعرف
-    var snapshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(widget.artisanId)
-        .get();
+    var snapshot =
+        await _firestore.collection('users').doc(widget.artisanId).get();
 
     // استخراج البيانات من snapshot وتعيينها في المتغيرات المناسبة
     setState(() {
@@ -162,6 +161,50 @@ class _ProfilePageState extends State<ShowProfilePage> {
               ),
             ),
           ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: () async {
+              if (user != null) {
+                try {
+                  await _firestore
+                      .collection('users')
+                      .doc(widget.artisanId)
+                      .collection('clientid')
+                      .doc(user.uid)
+                      .set({
+                    'addedAt': FieldValue
+                        .serverTimestamp(), // يمكنك إضافة البيانات التي تريدها هنا
+                  });
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Request sent successfully')),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to send request: $e')),
+                  );
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('User not logged in')),
+                );
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.brown[700], // لون الخلفية
+              padding:
+                  EdgeInsets.symmetric(vertical: 16), // حجم التباعد الداخلي
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: Text(
+              'Request',
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+          ),
         ),
       ),
     );
