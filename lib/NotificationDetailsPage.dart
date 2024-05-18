@@ -106,99 +106,83 @@ class NotificationDetailsPage extends StatelessWidget {
                       }
 
                       var clientFCMToken = tokenSnapshot.data!;
-                      return GestureDetector(
-                        onTap: () async {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text("Accept or Reject?"),
-                                content: Text(
-                                    "Do you want to accept or reject $clientName?"),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text('Accept'),
-                                    onPressed: () {
-                                      _firestore
-                                          .collection('users')
-                                          .doc(clientId)
-                                          .collection('artisanId')
-                                          .doc(artisanId)
-                                          .set({
-                                        'addedAt': FieldValue
-                                            .serverTimestamp(), // يمكنك إضافة البيانات التي تريدها هنا
-                                      });
-                                      _firestore
-                                          .collection('users')
-                                          .doc(clientId)
-                                          .collection('artisanId')
-                                          .doc(artisanId)
-                                          .update({'status': 'accepted'});
-                                      _firestore
-                                          .collection('users')
-                                          .doc(artisanId)
-                                          .collection('clientid')
-                                          .doc(clientId)
-                                          .update({'status': 'accepted'});
-
-                                      _firebaseMessaging.sendMessage(
-                                        to: clientFCMToken,
-                                        data: {
-                                          'title': 'تم قبول الطلب',
-                                          'body': 'تم قبول طلبك من $artisanId',
-                                          'clientFCMToken': clientFCMToken,
-                                        },
-                                      );
-
-                                      Navigator.of(context).pop();
-                                    },
+                      return Card(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(
+                                'Client : $clientName',
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                            ),
+                            ButtonBar(
+                              children: [
+                                SizedBox(
+                                  width: 30.0,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _acceptRequest(clientId, artisanId,
+                                        clientFCMToken, clientName);
+                                  },
+                                  child: Text(
+                                    'Accept',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20.0),
                                   ),
-                                  TextButton(
-                                    child: Text('Reject'),
-                                    onPressed: () {
-                                      _firestore
-                                          .collection('users')
-                                          .doc(clientId)
-                                          .collection('artisanId')
-                                          .doc(artisanId)
-                                          .set({
-                                        'addedAt': FieldValue
-                                            .serverTimestamp(), // يمكنك إضافة البيانات التي تريدها هنا
-                                      });
-                                      _firestore
-                                          .collection('users')
-                                          .doc(clientId)
-                                          .collection('artisanId')
-                                          .doc(artisanId)
-                                          .update({'status': 'reject'});
-                                      _firestore
-                                          .collection('users')
-                                          .doc(artisanId)
-                                          .collection('clientid')
-                                          .doc(clientId)
-                                          .update({'status': 'Reject'});
-
-                                      _firebaseMessaging.sendMessage(
-                                        to: clientFCMToken,
-                                        data: {
-                                          'title': 'تم رفض الطلب',
-                                          'body': 'تم رفض طلبك من $artisanId',
-                                          'clientFCMToken': clientFCMToken,
-                                        },
-                                      );
-
-                                      Navigator.of(context).pop();
-                                    },
+                                  style: ElevatedButton.styleFrom(
+                                    // تحديد شكل الحواف
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          8), // تحديد قيمة التدوير هنا
+                                      // يمكنك ضبط قيمة التدوير حسب الحاجة
+                                    ),
+                                    // تحديد الطول والعرض
+                                    minimumSize:
+                                        Size(120, 50), // طول وعرض الزر بالبكسل
+                                    // تحديد اللون
+                                    backgroundColor:
+                                        Colors.green, // لون الخلفية
+                                    disabledBackgroundColor:
+                                        Colors.white, // لون النص
                                   ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: Card(
-                          child: ListTile(
-                            title: Text('Client Name: $clientName'),
-                          ),
+                                ),
+                                SizedBox(
+                                  width: 30.0,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _rejectRequest(clientId, artisanId,
+                                        clientFCMToken, clientName);
+                                  },
+                                  child: Text(
+                                    'Reject',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20.0),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    // تحديد شكل الحواف
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          8), // تحديد قيمة التدوير هنا
+                                      // يمكنك ضبط قيمة التدوير حسب الحاجة
+                                    ),
+                                    // تحديد الطول والعرض
+                                    minimumSize:
+                                        Size(120, 50), // طول وعرض الزر بالبكسل
+                                    // تحديد اللون
+                                    backgroundColor: Color.fromARGB(
+                                        255, 154, 7, 7), // لون الخلفية
+                                    disabledBackgroundColor:
+                                        Colors.white, // لون النص
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 30.0,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -209,6 +193,72 @@ class NotificationDetailsPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  void _acceptRequest(String clientId, String artisanId, String clientFCMToken,
+      String clientName) {
+    _firestore
+        .collection('users')
+        .doc(clientId)
+        .collection('artisanId')
+        .doc(artisanId)
+        .set({
+      'addedAt': FieldValue.serverTimestamp(),
+    });
+    _firestore
+        .collection('users')
+        .doc(clientId)
+        .collection('artisanId')
+        .doc(artisanId)
+        .update({'status': 'accepted'});
+    _firestore
+        .collection('users')
+        .doc(artisanId)
+        .collection('clientid')
+        .doc(clientId)
+        .update({'status': 'accepted'});
+
+    _firebaseMessaging.sendMessage(
+      to: clientFCMToken,
+      data: {
+        'title': 'Request Accepted',
+        'body': 'Your request has been accepted by $artisanId',
+        'clientFCMToken': clientFCMToken,
+      },
+    );
+  }
+
+  void _rejectRequest(String clientId, String artisanId, String clientFCMToken,
+      String clientName) {
+    _firestore
+        .collection('users')
+        .doc(clientId)
+        .collection('artisanId')
+        .doc(artisanId)
+        .set({
+      'addedAt': FieldValue.serverTimestamp(),
+    });
+    _firestore
+        .collection('users')
+        .doc(clientId)
+        .collection('artisanId')
+        .doc(artisanId)
+        .update({'status': 'rejected'});
+    _firestore
+        .collection('users')
+        .doc(artisanId)
+        .collection('clientid')
+        .doc(clientId)
+        .update({'status': 'rejected'});
+
+    _firebaseMessaging.sendMessage(
+      to: clientFCMToken,
+      data: {
+        'title': 'Request Rejected',
+        'body': 'Your request has been rejected by $artisanId',
+        'clientFCMToken': clientFCMToken,
+      },
     );
   }
 }

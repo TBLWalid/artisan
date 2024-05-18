@@ -62,14 +62,16 @@ class MyRequestsPage extends StatelessWidget {
                 elevation: 4,
                 margin: EdgeInsets.all(8.0),
                 child: InkWell(
-                  onTap: () {
+                  onTap: () async {
+                    String artisanName = await _getArtisanName(artisanId);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ShowProfilePage(
-                                artisanId: artisanId,
-                                artisanName: '',
-                              )), // افتراضياً لديك صفحة اسمها ShowPage
+                        builder: (context) => ShowProfilePage(
+                          artisanId: artisanId,
+                          artisanName: artisanName,
+                        ),
+                      ),
                     );
                   },
                   child: ListTile(
@@ -92,15 +94,13 @@ class MyRequestsPage extends StatelessWidget {
                     subtitle: Row(
                       children: [
                         Text('Status: $status'),
-                        SizedBox(
-                            width: 8.0), // إضافة مسافة صغيرة بين النص والأيقونة
-                        if (status == 'accepted') ...[
+                        SizedBox(width: 8.0),
+                        if (status == 'accepted')
                           Image.asset('images/jaccepte.png',
                               height: 24.0, width: 24.0),
-                        ] else if (status == 'reject') ...[
+                        if (status == 'rejected')
                           Image.asset('images/supprimer.png',
                               height: 24.0, width: 24.0),
-                        ],
                       ],
                     ),
                   ),
