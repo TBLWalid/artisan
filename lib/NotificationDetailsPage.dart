@@ -111,7 +111,7 @@ class NotificationDetailsPage extends StatelessWidget {
                           children: [
                             ListTile(
                               title: Text(
-                                'Client : $clientName',
+                                'Client Name: $clientName',
                                 style: TextStyle(fontSize: 20.0),
                               ),
                             ),
