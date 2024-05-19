@@ -1,3 +1,4 @@
+import 'package:artisans_app/about.dart';
 import 'package:artisans_app/language_switch_page.dart';
 import 'package:artisans_app/login_page.dart';
 import 'package:artisans_app/signup_page.dart';
@@ -40,8 +41,8 @@ class SettingsPage extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
             onTap: () {
-              // Navigator.push(context,
-              //   MaterialPageRoute(builder: (context) => information_page()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => aboutus()));
             },
           ),
           if (isLoggedIn)

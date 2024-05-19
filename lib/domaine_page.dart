@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'back.dart'; // Import your HomePageBackground widget
 import 'search_page.dart';
 import 'show_profile_page.dart';
@@ -44,7 +43,7 @@ class _DomainePageState extends State<DomainePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${widget.category}', // استخدم قيمة الفئة المختارة هنا
+          '${widget.category}',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontFamily: 'Nunito',
@@ -83,10 +82,10 @@ class _DomainePageState extends State<DomainePage> {
                         height: 60.0,
                         width: 200.0,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: Colors.white),
-                            color: Colors.brown[400]),
-                        // color: Colors.brown[300],
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(color: Colors.white),
+                          color: Colors.brown[400],
+                        ),
                         child: PopupMenuButton<String>(
                           initialValue:
                               'all Wilaya', // تعيين القيمة الافتراضية للعنوان
@@ -351,7 +350,7 @@ class _DomainePageState extends State<DomainePage> {
                                   ),
                                 ),
                                 Icon(
-                                  Icons.arrow_drop_down, // أيقونة السهم للأسفل
+                                  Icons.arrow_drop_down,
                                   color: Colors.white,
                                   size: 50.0,
                                 ),
@@ -379,15 +378,13 @@ class _DomainePageState extends State<DomainePage> {
                             color: Colors.brown[450],
                           ),
                           child: Icon(
-                            Icons.search, // أيقونة البحث
-                            color: Colors.white, // لون الأيقونة
-                            size: 30.0, // حجم الأيقونة
+                            Icons.search,
+                            color: Colors.white,
+                            size: 30.0,
                           ),
                         ),
                       ),
                     ),
-
-                    // Your other Padding widgets for Row
                   ],
                 ),
                 SizedBox(height: 20),
@@ -434,12 +431,19 @@ class _DomainePageState extends State<DomainePage> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
-                  child: Image.asset(
-                    'images/walid.jpg',
-                    width: 100.0,
-                    height: 100.0,
-                    fit: BoxFit.cover,
-                  ),
+                  child: artisanData['profilePhotoUrl'] != null
+                      ? Image.network(
+                          artisanData['profilePhotoUrl'],
+                          width: 100.0,
+                          height: 100.0,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          'images/blank_profile.png',
+                          width: 100.0,
+                          height: 100.0,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 SizedBox(width: 10),
                 Expanded(

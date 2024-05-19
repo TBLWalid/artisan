@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'back.dart'; // Import your HomePageBackground widget
 import 'show_profile_page.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -101,10 +102,6 @@ class _SearchPageState extends State<SearchPage> {
         color: Colors.white,
         elevation: 4,
         child: ListTile(
-          leading: CircleAvatar(
-            radius: 30.0,
-            backgroundImage: AssetImage('images/walid.jpg'),
-          ),
           title: Text('$firstName $lastName'),
           subtitle:
               Text('${artisanData['profession']} - ${artisanData['state']}'),
