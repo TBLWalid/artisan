@@ -111,7 +111,7 @@ class NotificationDetailsPage extends StatelessWidget {
                           children: [
                             ListTile(
                               title: Text(
-                                'Client : $clientName',
+                                'Client Name: $clientName',
                                 style: TextStyle(fontSize: 20.0),
                               ),
                             ),
@@ -123,7 +123,7 @@ class NotificationDetailsPage extends StatelessWidget {
                                 ElevatedButton(
                                   onPressed: () {
                                     _acceptRequest(clientId, artisanId,
-                                        clientFCMToken, clientName);
+                                        clientFCMToken, clientName, context);
                                   },
                                   child: Text(
                                     'Accept',
@@ -197,34 +197,95 @@ class NotificationDetailsPage extends StatelessWidget {
   }
 
   void _acceptRequest(String clientId, String artisanId, String clientFCMToken,
-      String clientName) {
-    _firestore
-        .collection('users')
-        .doc(clientId)
-        .collection('artisanId')
-        .doc(artisanId)
-        .set({
-      'addedAt': FieldValue.serverTimestamp(),
-    });
-    _firestore
-        .collection('users')
-        .doc(clientId)
-        .collection('artisanId')
-        .doc(artisanId)
-        .update({'status': 'accepted'});
-    _firestore
-        .collection('users')
-        .doc(artisanId)
-        .collection('clientid')
-        .doc(clientId)
-        .update({'status': 'accepted'});
+      String clientName, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        int day = 1;
+        int month = 1;
+        String description = '';
+        return AlertDialog(
+          title: Text('Enter Date and Description'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  onChanged: (value) {
+                    day = int.tryParse(value) ?? 1;
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Day',
+                  ),
+                ),
+                TextField(
+                  onChanged: (value) {
+                    month = int.tryParse(value) ?? 1;
+                  },
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Month',
+                  ),
+                ),
+                TextField(
+                  onChanged: (value) {
+                    description = value;
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform the action you want with the entered data
+                _firestore
+                    .collection('users')
+                    .doc(clientId)
+                    .collection('artisanId')
+                    .doc(artisanId)
+                    .set({
+                  'addedAt': FieldValue.serverTimestamp(),
+                });
+                _firestore
+                    .collection('users')
+                    .doc(clientId)
+                    .collection('artisanId')
+                    .doc(artisanId)
+                    .update({'status': 'accepted'});
+                _firestore
+                    .collection('users')
+                    .doc(artisanId)
+                    .collection('clientid')
+                    .doc(clientId)
+                    .update({'status': 'accepted'});
 
-    _firebaseMessaging.sendMessage(
-      to: clientFCMToken,
-      data: {
-        'title': 'Request Accepted',
-        'body': 'Your request has been accepted by $artisanId',
-        'clientFCMToken': clientFCMToken,
+                _firebaseMessaging.sendMessage(
+                  to: clientFCMToken,
+                  data: {
+                    'title': 'Request Accepted',
+                    'body': 'Your request has been accepted by $artisanId',
+                    'clientFCMToken': clientFCMToken,
+                    'day': day.toString(),
+                    'month': month.toString(),
+                    'description': description,
+                  },
+                );
+                Navigator.of(context).pop();
+              },
+              child: Text('Accept'),
+            ),
+          ],
+        );
       },
     );
   }
