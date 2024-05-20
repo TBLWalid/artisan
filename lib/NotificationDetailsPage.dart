@@ -15,7 +15,7 @@ class NotificationDetailsPage extends StatelessWidget {
 
   Future<String> _getClientFCMToken(String clientId) async {
     var snapshot = await _firestore.collection('users').doc(clientId).get();
-    return snapshot['token']; // Assuming the field name is 'fcm_token'
+    return snapshot['token']; // Assuming the field name is 'token'
   }
 
   @override
@@ -25,7 +25,7 @@ class NotificationDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'All Client',
+          'All Clients',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.brown[800],
@@ -54,7 +54,9 @@ class NotificationDetailsPage extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('No client IDs found'));
+            return Center(
+                child:
+                    Text('No clients found', style: TextStyle(fontSize: 20.0)));
           }
 
           List<String> clientIds =
@@ -101,7 +103,9 @@ class NotificationDetailsPage extends StatelessWidget {
                       }
                       if (!tokenSnapshot.hasData) {
                         return ListTile(
-                          title: Text('No FCM token found'),
+                          title: Text(
+                            'No FCM token found',
+                          ),
                         );
                       }
 
@@ -110,77 +114,175 @@ class NotificationDetailsPage extends StatelessWidget {
                         child: Column(
                           children: [
                             ListTile(
-                              title: Text(
-                                'Client Name: $clientName',
-                                style: TextStyle(fontSize: 20.0),
+                              title: Column(
+                                children: [
+                                  Text(
+                                    'Client Name: $clientName',
+                                    style: TextStyle(fontSize: 25.0),
+                                  ),
+                                  // Text(
+                                  //   'neighborhood: $clientName',
+                                  //   style: TextStyle(fontSize: 20.0),
+                                  // ),
+                                ],
                               ),
                             ),
-                            ButtonBar(
-                              children: [
-                                SizedBox(
-                                  width: 30.0,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    _acceptRequest(clientId, artisanId,
-                                        clientFCMToken, clientName, context);
-                                  },
-                                  child: Text(
-                                    'Accept',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20.0),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    // تحديد شكل الحواف
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          8), // تحديد قيمة التدوير هنا
-                                      // يمكنك ضبط قيمة التدوير حسب الحاجة
-                                    ),
-                                    // تحديد الطول والعرض
-                                    minimumSize:
-                                        Size(120, 50), // طول وعرض الزر بالبكسل
-                                    // تحديد اللون
-                                    backgroundColor:
-                                        Colors.green, // لون الخلفية
-                                    disabledBackgroundColor:
-                                        Colors.white, // لون النص
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 30.0,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    _rejectRequest(clientId, artisanId,
-                                        clientFCMToken, clientName);
-                                  },
-                                  child: Text(
-                                    'Reject',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20.0),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    // تحديد شكل الحواف
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          8), // تحديد قيمة التدوير هنا
-                                      // يمكنك ضبط قيمة التدوير حسب الحاجة
-                                    ),
-                                    // تحديد الطول والعرض
-                                    minimumSize:
-                                        Size(120, 50), // طول وعرض الزر بالبكسل
-                                    // تحديد اللون
-                                    backgroundColor: Color.fromARGB(
-                                        255, 154, 7, 7), // لون الخلفية
-                                    disabledBackgroundColor:
-                                        Colors.white, // لون النص
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 30.0,
-                                ),
-                              ],
+                            FutureBuilder<DocumentSnapshot>(
+                              future: _firestore
+                                  .collection('users')
+                                  .doc(artisanId)
+                                  .collection('clientid')
+                                  .doc(clientId)
+                                  .get(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData ||
+                                    !snapshot.data!.exists) {
+                                  return Container(); // Handle if document does not exist
+                                }
+                                var data = snapshot.data!.data()
+                                    as Map<String, dynamic>;
+                                if (!data.containsKey('status')) {
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          _acceptRequest(
+                                            clientId,
+                                            artisanId,
+                                            clientFCMToken,
+                                            clientName,
+                                            context,
+                                          );
+                                        },
+                                        child: Text(
+                                          'Accept',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                          ),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          minimumSize: Size(120, 50),
+                                          backgroundColor: Colors.green,
+                                          disabledBackgroundColor: Colors.white,
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          _rejectRequest(
+                                            clientId,
+                                            artisanId,
+                                            clientFCMToken,
+                                            clientName,
+                                          );
+                                        },
+                                        child: Text(
+                                          'Reject',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                          ),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          minimumSize: Size(120, 50),
+                                          backgroundColor:
+                                              Color.fromARGB(255, 154, 7, 7),
+                                          disabledBackgroundColor: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+
+                                var status = data['status'] as String?;
+                                if (status == 'completed') {
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'completed',
+                                        style: TextStyle(
+                                          color: Colors.brown,
+                                          fontSize: 20.0,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Image.asset(
+                                        'images/checked.png',
+                                        height: 24.0,
+                                        width: 24.0,
+                                      ),
+                                    ],
+                                  );
+                                } else if (status == 'accepted') {
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ButtonBar(
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              try {
+                                                await _firestore
+                                                    .collection('users')
+                                                    .doc(artisanId)
+                                                    .collection('clientid')
+                                                    .doc(clientId)
+                                                    .update({
+                                                  'status': 'completed'
+                                                });
+
+                                                await _firestore
+                                                    .collection('users')
+                                                    .doc(clientId)
+                                                    .collection('artisanId')
+                                                    .doc(artisanId)
+                                                    .update({
+                                                  'status': 'completed'
+                                                });
+                                              } catch (e) {
+                                                print(
+                                                    'Error updating status: $e');
+                                              }
+                                            },
+                                            child: Text(
+                                              'Transaction completed?',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20.0),
+                                            ),
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              minimumSize: Size(200, 50),
+                                              backgroundColor: Colors.brown,
+                                              disabledBackgroundColor:
+                                                  Colors.grey,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }
+
+                                // Return default widget if status is neither completed nor accepted
+                                return Container();
+                              },
                             ),
                           ],
                         ),
@@ -201,8 +303,8 @@ class NotificationDetailsPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        int day = 1;
-        int month = 1;
+        String day = '';
+        String month = '';
         String description = '';
         return AlertDialog(
           title: Text('Enter Date and Description'),
@@ -211,7 +313,7 @@ class NotificationDetailsPage extends StatelessWidget {
               children: <Widget>[
                 TextField(
                   onChanged: (value) {
-                    day = int.tryParse(value) ?? 1;
+                    day = value;
                   },
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -220,7 +322,7 @@ class NotificationDetailsPage extends StatelessWidget {
                 ),
                 TextField(
                   onChanged: (value) {
-                    month = int.tryParse(value) ?? 1;
+                    month = value;
                   },
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -246,40 +348,35 @@ class NotificationDetailsPage extends StatelessWidget {
               child: Text('Cancel'),
             ),
             TextButton(
-              onPressed: () {
-                // Perform the action you want with the entered data
-                _firestore
+              onPressed: () async {
+                // Gather all data and perform a single set operation
+                await _firestore
                     .collection('users')
                     .doc(clientId)
                     .collection('artisanId')
                     .doc(artisanId)
                     .set({
                   'addedAt': FieldValue.serverTimestamp(),
-                });
-                _firestore
-                    .collection('users')
-                    .doc(clientId)
-                    .collection('artisanId')
-                    .doc(artisanId)
-                    .update({'status': 'accepted'});
-                _firestore
+                  'day': day,
+                  'month': month,
+                  'description': description,
+                  'status': 'accepted'
+                }, SetOptions(merge: true));
+
+                await _firestore
                     .collection('users')
                     .doc(artisanId)
                     .collection('clientid')
                     .doc(clientId)
                     .update({'status': 'accepted'});
 
-                _firebaseMessaging.sendMessage(
-                  to: clientFCMToken,
-                  data: {
-                    'title': 'Request Accepted',
-                    'body': 'Your request has been accepted by $artisanId',
-                    'clientFCMToken': clientFCMToken,
-                    'day': day.toString(),
-                    'month': month.toString(),
-                    'description': description,
-                  },
+                // Send notification to client
+                await _sendNotification(
+                  clientFCMToken,
+                  'Request Accepted',
+                  'Your request has been accepted by $artisanId. Day: $day, Month: $month, Description: $description',
                 );
+
                 Navigator.of(context).pop();
               },
               child: Text('Accept'),
@@ -290,36 +387,45 @@ class NotificationDetailsPage extends StatelessWidget {
     );
   }
 
-  void _rejectRequest(String clientId, String artisanId, String clientFCMToken,
-      String clientName) {
-    _firestore
-        .collection('users')
-        .doc(clientId)
-        .collection('artisanId')
-        .doc(artisanId)
-        .set({
-      'addedAt': FieldValue.serverTimestamp(),
-    });
-    _firestore
-        .collection('users')
-        .doc(clientId)
-        .collection('artisanId')
-        .doc(artisanId)
-        .update({'status': 'rejected'});
-    _firestore
-        .collection('users')
-        .doc(artisanId)
-        .collection('clientid')
-        .doc(clientId)
-        .update({'status': 'rejected'});
+  Future<void> _sendNotification(
+      String token, String title, String body) async {
+    // Replace this with your function to send notifications, possibly using Cloud Functions or another backend service.
+    print('Sending notification to $token: $title - $body');
+  }
 
-    _firebaseMessaging.sendMessage(
-      to: clientFCMToken,
-      data: {
-        'title': 'Request Rejected',
-        'body': 'Your request has been rejected by $artisanId',
-        'clientFCMToken': clientFCMToken,
-      },
-    );
+  void _rejectRequest(String clientId, String artisanId, String clientFCMToken,
+      String clientName) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(clientId)
+          .collection('artisanId')
+          .doc(artisanId)
+          .set({
+        'addedAt': FieldValue.serverTimestamp(),
+      });
+
+      await _firestore
+          .collection('users')
+          .doc(clientId)
+          .collection('artisanId')
+          .doc(artisanId)
+          .update({'status': 'rejected'});
+
+      await _firestore
+          .collection('users')
+          .doc(artisanId)
+          .collection('clientid')
+          .doc(clientId)
+          .update({'status': 'rejected'});
+
+      await _sendNotification(
+        clientFCMToken,
+        'Request Rejected',
+        'Your request has been rejected by $artisanId',
+      );
+    } catch (e) {
+      print('Error rejecting request: $e');
+    }
   }
 }

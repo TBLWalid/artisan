@@ -1,15 +1,13 @@
 import 'dart:typed_data';
+
 import 'package:artisans_app/comment.dart';
-import 'package:artisans_app/func.dart';
 import 'package:artisans_app/my_information.dart';
 import 'package:artisans_app/pic_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'create_poste.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -142,11 +140,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ],
                               ),
-                              padding: EdgeInsets.all(12),
-                              child: Icon(
-                                Icons.message,
-                                color: Colors.white,
-                              ),
                             ),
                           ),
                         ],
@@ -179,15 +172,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreatepostPage()),
-            );
-          },
-          child: Icon(Icons.add),
         ),
       ),
     );

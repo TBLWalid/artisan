@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -93,10 +94,6 @@ class _picprofileState extends State<picprofile> {
         children: [
           Column(
             children: [
-              ElevatedButton(
-                onPressed: pickImage,
-                child: Text('Add Photo'),
-              ),
               Expanded(
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -129,6 +126,7 @@ class _picprofileState extends State<picprofile> {
               ),
             ],
           ),
+
           _selectedImageIndex >= 0
               ? photo_view.PhotoView(
                   imageProvider:
@@ -139,6 +137,10 @@ class _picprofileState extends State<picprofile> {
                 )
               : SizedBox(), // Empty SizedBox when no image selected
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: pickImage,
+        child: Icon(Icons.add),
       ),
     );
   }
